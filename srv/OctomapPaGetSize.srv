@@ -1,0 +1,14 @@
+## this file is similar to nearfield_map/srv/NearfieldMapGetSize.srv
+---
+# number of all octomap nodes (inner and outer)
+int32 size
+
+# total size in bytes
+int64 memoryusage
+
+# number of inserted pointclouds
+int32 count_cloud
+# number of inserted pointclouds (old format)
+int32 count_cloud_old
+# number of inserted laser scans
+int32 count_laser
