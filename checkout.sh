@@ -46,7 +46,7 @@
 ###############################################################################
 
 NAME_GIT_THIS="octomap"
-NAME_GIT_SUBS=""
+NAME_GIT_SUBS="parameter"
 
 ###############################################################################
 URL_GIT_BASE="https://github.com/peterweissig/"
@@ -93,7 +93,7 @@ if [ "$#" -eq 0 ]; then
     rm "${NAME_CHECKOUT_SCRIPT}"
 
 ###############################################################################
-elif [ "$1" == "${NAME_ARGUMENT_SCRIPT}" ]; then
+elif [ "$1" = "${NAME_ARGUMENT_SCRIPT}" ]; then
     echo "Running this script with argument \"$1\"."
     echo "Therefore all dependend sources of"
     echo "  \"${NAME_GIT_THIS}\""
