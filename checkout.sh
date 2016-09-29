@@ -107,13 +107,13 @@ elif [ "$1" = "${NAME_ARGUMENT_SCRIPT}" ]; then
 
         DIR_DEPENDENCY="${dependency}_pa/"
 
-        if [ ! -d "../${dependency}" ]; then
+        if [ ! -d "../${DIR_DEPENDENCY}" ]; then
             echo ""
             echo "### checking out ${dependency}"
-            mkdir -p "../${dependency}"
-            cd "../${dependency}"
+            mkdir -p "../${DIR_DEPENDENCY}"
+            cd "../${DIR_DEPENDENCY}"
 
-            URL="${URL_GIT_BASE}cpp_${dependency}.git"
+            URL="${URL_GIT_BASE}ros_${dependency}.git"
             git init
             git pull "${URL}"
 
