@@ -86,20 +86,6 @@ class cNodeStampedBasePa : public NODE {
     inline void updateTimestampChildren();
     inline void updateOccupancyChildren();
 
-    // deprecated - this is moved to the octree itself or
-    //              it is using virtual functions (V1.8)
-    // but we are using an older version (ros indigo == V1.6)
-    bool createChild(unsigned int i);
-    virtual inline NodeTypeFull* getChild(unsigned int i);
-    virtual inline const NodeTypeFull* getChild(unsigned int i) const;
-    bool collapsible(void) const;
-    bool deleteChild(unsigned int i);
-    bool pruneNode(void);
-    void expandNode(void);
-
-    std::istream& readValue (std::istream &s);
-    std::ostream& writeValue(std::ostream &s) const;
-
   protected:
     cTimePa timestamp;
 };
