@@ -79,6 +79,7 @@ catkin_package(
     parameter_pa
 
   LIBRARIES
+    ${PROJECT_NAME}_internal
     ${PROJECT_NAME}_ros
     ${PROJECT_NAME}_stamped_ros
 )
