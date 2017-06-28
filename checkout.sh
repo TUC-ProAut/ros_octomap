@@ -2,8 +2,8 @@
 
 ###############################################################################
 #                                                                             #
-# Makefile                                                                    #
-# ========                                                                    #
+# checkout.sh                                                                 #
+# ===========                                                                 #
 #                                                                             #
 ###############################################################################
 #                                                                             #
@@ -17,7 +17,7 @@
 #                                                                             #
 # New BSD License                                                             #
 #                                                                             #
-# Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     #
+# Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     #
 # All rights reserved.                                                        #
 #                                                                             #
 # Redistribution and use in source and binary forms, with or without          #
@@ -64,32 +64,28 @@ if [ "$#" -eq 0 ]; then
     echo "will be checked out completely."
     echo ""
 
-    PATH_CURRENT="$(pwd)/"
-
-    mkdir -p "${PATH_CURRENT}${DIR_THIS}"
-    cd "${PATH_CURRENT}${DIR_THIS}"
+    SRC_DIR_MAIN="$(pwd)/"
 
     if [ -d ".git" ]; then
         echo "This folder already is a git-repository!"
         return
     fi
-    git init
-    git pull "${URL_GIT_THIS}"
+    git clone "${URL_GIT_THIS}" "${NAME_GIT_THIS}"
     if [ $? -ne 0 ]; then return; fi
 
     echo ""
     echo "### checking out additional source code"
+    cd "${NAME_GIT_THIS}"
     if [ ! -f "${NAME_CHECKOUT_SCRIPT}" ]; then
         echo "Error - no checkout script"
         return
     fi
-
     sh "${NAME_CHECKOUT_SCRIPT}" "${NAME_ARGUMENT_SCRIPT}"
     if [ $? -ne 0 ]; then return; fi
 
     echo ""
     echo "### deleting this script"
-    cd "${PATH_CURRENT}"
+    cd "${SRC_DIR_MAIN}"
     rm "${NAME_CHECKOUT_SCRIPT}"
 
 ###############################################################################
@@ -110,13 +106,12 @@ elif [ "$1" = "${NAME_ARGUMENT_SCRIPT}" ]; then
         if [ ! -d "../${DIR_DEPENDENCY}" ]; then
             echo ""
             echo "### checking out ${dependency}"
-            mkdir -p "../${DIR_DEPENDENCY}"
-            cd "../${DIR_DEPENDENCY}"
+            cd ".."
 
             URL="${URL_GIT_BASE}ros_${dependency}.git"
-            git init
-            git pull "${URL}"
+            git clone "${URL}" "${DIR_DEPENDENCY}"
 
+            cd "${DIR_DEPENDENCY}"
             if [ -f "checkout.sh" ]; then
                 sh "${NAME_CHECKOUT_SCRIPT}" "${NAME_ARGUMENT_SCRIPT}"
             fi
