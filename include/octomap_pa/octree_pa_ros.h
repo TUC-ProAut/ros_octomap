@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* addcloud_parameter.h                                                        *
-* ====================                                                        *
+* octree_pa_ros.h                                                             *
+* ===============                                                             *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,33 +43,32 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef __ADDCLOUD_PARAMETER_H
-#define __ADDCLOUD_PARAMETER_H
+#ifndef __OCTREE_PA_ROS_H
+#define __OCTREE_PA_ROS_H
 
-//**************************[cAddCloudParameter]*******************************
-class cAddCloudParameter {
+// local headers
+#include "octomap_pa/octree_base_pa_ros.h"
+
+// ros headers
+#include <ros/ros.h>
+
+// additional libraries
+#include <octomap/OcTree.h>
+
+
+//**************************[cOctreePaRos]*************************************
+class cOctreePaRos : public cOctreeBasePaRos
+  <octomap::OcTree> {
   public:
-    cAddCloudParameter(void);
-    cAddCloudParameter(const cAddCloudParameter &other);
-    cAddCloudParameter& operator = (const cAddCloudParameter &other);
+    typedef cOctreeBasePaRos<OcTree> TreeTypeBase;
 
-    // octomap parameter
-    //! octomap parameter: probability for a "hit"
-    double map_prob_hit_;
-    //! octomap parameter: probability for a "miss"
-    double map_prob_miss_;
+    //! default constructor
+    cOctreePaRos(const double resolution);
 
-    //! pointcloud insertion parameter: use pcl-transform instead of
-    //! octomap-transform (speeds up)
-    bool pcd_explicit_transform_;
+    //! default destructor
+    virtual ~cOctreePaRos();
 
-    //! pointcloud insertion parameter: use voxel-filter (speeds up)
-    bool pcd_voxel_active_;
-    //! pointcloud insertion parameter: use pcl-filter instead of
-    //! octomap-filter (slows down)
-    bool pcd_voxel_explicit_;
-    //! pointcloud insertion parameter: relative resolution of pcl-filter
-    double pcd_voxel_explicit_relative_resolution_;
+  protected:
 };
 
-#endif // __ADDCLOUD_PARAMETER_H
+#endif // __OCTREE_PA_ROS_H

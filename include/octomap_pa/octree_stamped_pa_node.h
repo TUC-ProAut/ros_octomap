@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* octree_pa_node.h                                                            *
-* ================                                                            *
+* octree_stamped_pa_node.h                                                    *
+* ========================                                                    *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,13 +43,13 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef __OCTREE_PA_NODE_H
-#define __OCTREE_PA_NODE_H
+#ifndef __OCTREE_STAMPED_PA_NODE_H
+#define __OCTREE_STAMPED_PA_NODE_H
 
 // local headers
-#include "octree_pa_ros.h"
-#include "octree_base_pa_node_parameter.h"
-#include "addcloud_parameter.h"
+#include "octomap_pa/octree_stamped_pa_ros.h"
+#include "octomap_pa/octree_base_pa_node_parameter.h"
+#include "octomap_pa/addcloud_parameter.h"
 
 #include "octomap_pa/OctomapPaFileName.h"
 #include "octomap_pa/OctomapPaGetSize.h"
@@ -67,7 +67,7 @@
 
 #include <octomap_msgs/Octomap.h>
 
-#include <parameter_pa_ros.h>
+#include <parameter_pa/parameter_pa_ros.h>
 
 // additional libraries
 #include <pcl/point_types.h>
@@ -78,14 +78,14 @@
 #include <string>
 #include <vector>
 
-//**************************[cOctreePaNode]************************************
-class cOctreePaNode : public cOctreePaRos {
+//**************************[cOctreeStampedPaNode]*****************************
+class cOctreeStampedPaNode : public cOctreeStampedPaRos {
   public:
     //! default constructor
-    cOctreePaNode();
+    cOctreeStampedPaNode();
 
     //! default destructor
-    ~cOctreePaNode();
+    ~cOctreeStampedPaNode();
 
     //! function for publishing the octomap
     void publishOctomap(void);
@@ -159,4 +159,4 @@ class cOctreePaNode : public cOctreePaRos {
       octomap_pa::OctomapPaFileName::Response &res);
 };
 
-#endif // __OCTREE_PA_NODE_H
+#endif // __OCTREE_STAMPED_PA_NODE_H

@@ -1,62 +1,44 @@
 <?xml version="1.0"?>
-<package>
-  <name>octomap_pa</name>
-  <version>1.0.0</version>
-  <description>The proaut octomap package</description>
-  <maintainer email="wepet@hrz.tu-chemnitz.de">wepet</maintainer>
-  <license>other</license>
+<package format="2">
+    <name>octomap_pa</name>
+    <version>1.1.0</version>
+    <description>ProAut octomap package</description>
+    <maintainer email="wepet@hrz.tu-chemnitz.de">Peter Weissig</maintainer>
+    <license>BSD</license>
 
-  <buildtool_depend>catkin</buildtool_depend>
-
-
-  <build_depend>roscpp</build_depend>
-
-  <build_depend>std_msgs</build_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>sensor_msgs</build_depend>
-  <build_depend>nav_msgs</build_depend>
-  <build_depend>std_srvs</build_depend>
-  <build_depend>message_generation</build_depend>
-
-  <build_depend>tf</build_depend>
-  <build_depend>laser_geometry</build_depend>
-
-  <build_depend>pcl_ros</build_depend>
-  <build_depend>pcl_conversions</build_depend>
-
-  <build_depend>octomap_ros</build_depend>
-  <build_depend>octomap_msgs</build_depend>
-
-  <build_depend>parameter_pa</build_depend>
-
-  <!-- Additional dependencies needed to compile this package. -->
-  <build_depend>libpcl-all-dev</build_depend>
-  <build_depend>octomap</build_depend>
+    <buildtool_depend>catkin</buildtool_depend>
 
 
+    <depend>roscpp</depend>
 
-  <run_depend>roscpp</run_depend>
+    <depend>std_msgs</depend>
+    <depend>sensor_msgs</depend>
+    <depend>geometry_msgs</depend>
+    <depend>nav_msgs</depend>
+    <depend>std_srvs</depend>
 
-  <run_depend>std_msgs</run_depend>
-  <run_depend>geometry_msgs</run_depend>
-  <run_depend>sensor_msgs</run_depend>
-  <run_depend>nav_msgs</run_depend>
-  <run_depend>std_srvs</run_depend>
-  <run_depend>message_runtime</run_depend>
+    <depend>tf</depend>
+    <depend>laser_geometry</depend>
 
-  <run_depend>tf</run_depend>
-  <run_depend>laser_geometry</run_depend>
+    <depend>pcl_ros</depend>
+    <depend>pcl_conversions</depend>
 
-  <run_depend>pcl_ros</run_depend>
-  <run_depend>pcl_conversions</run_depend>
+    <depend>octomap_ros</depend>
+    <depend>octomap_msgs</depend>
 
-  <run_depend>octomap_ros</run_depend>
-  <run_depend>octomap_msgs</run_depend>
+    <depend>parameter_pa</depend>
 
-  <run_depend>parameter_pa</run_depend>
 
-  <!-- Additional dependencies needed to compile this package. -->
-  <run_depend>libpcl-all</run_depend>
-  <run_depend>octomap</run_depend>
+    <build_depend>libpcl-all-dev</build_depend>
+    <build_export_depend>libpcl-all</build_export_depend>
+    <exec_depend>libpcl-all</exec_depend>
+
+    <build_depend>message_generation</build_depend>
+    <build_export_depend>message_runtime</build_export_depend>
+    <exec_depend>message_runtime</exec_depend>
+
+
+    <doc_depend>doxygen</doc_depend>
+    <doc_depend>parameter_pa</doc_depend>
 
 </package>

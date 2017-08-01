@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* octree_base_pa_ros_parameter.h                                              *
-* ==============================                                              *
+* addcloud_parameter.h                                                        *
+* ====================                                                        *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,32 +43,33 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef __OCTREE_BASE_PA_ROS_PARAMETER_H
-#define __OCTREE_BASE_PA_ROS_PARAMETER_H
+#ifndef __ADDCLOUD_PARAMETER_H
+#define __ADDCLOUD_PARAMETER_H
 
-// ros headers
-#include <ros/ros.h>
-
-// standard headers
-#include <string>
-
-//**************************[cOctreeBasePaRosParameter]************************
-class cOctreeBasePaRosParameter {
+//**************************[cAddCloudParameter]*******************************
+class cAddCloudParameter {
   public:
-    cOctreeBasePaRosParameter(void);
-    cOctreeBasePaRosParameter(const cOctreeBasePaRosParameter &other);
-    cOctreeBasePaRosParameter& operator = (const
-      cOctreeBasePaRosParameter &other);
+    cAddCloudParameter(void);
+    cAddCloudParameter(const cAddCloudParameter &other);
+    cAddCloudParameter& operator = (const cAddCloudParameter &other);
 
-    //! name of the output frame ("map")
-    std::string output_frame_;
+    // octomap parameter
+    //! octomap parameter: probability for a "hit"
+    double map_prob_hit_;
+    //! octomap parameter: probability for a "miss"
+    double map_prob_miss_;
 
-    //! duration before a time jump back in time is detected
-    ros::Duration timejump_detection_duration;
+    //! pointcloud insertion parameter: use pcl-transform instead of
+    //! octomap-transform (speeds up)
+    bool pcd_explicit_transform_;
 
-    //! time increment for output messages for bridging small time jumps
-    ros::Duration timejump_increment;
+    //! pointcloud insertion parameter: use voxel-filter (speeds up)
+    bool pcd_voxel_active_;
+    //! pointcloud insertion parameter: use pcl-filter instead of
+    //! octomap-filter (slows down)
+    bool pcd_voxel_explicit_;
+    //! pointcloud insertion parameter: relative resolution of pcl-filter
+    double pcd_voxel_explicit_relative_resolution_;
 };
 
-
-#endif // __OCTREE_BASE_PA_ROS_PARAMETER_H
+#endif // __ADDCLOUD_PARAMETER_H

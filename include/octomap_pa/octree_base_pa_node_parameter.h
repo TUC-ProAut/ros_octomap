@@ -1,9 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* node_stamped_base_pa.h                                                      *
-* ======================                                                      *
-*                                                                             *
-* File is based on OcTreeStamped.h and OcTreeNode.h                           *
+* octree_base_pa_node_parameter.h                                             *
+* ===============================                                             *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -17,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -45,65 +43,37 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef NODE_STAMPED_BASE_PA_H
-#define NODE_STAMPED_BASE_PA_H
-
-// local headers
-#include "time_pa.h"
+#ifndef __OCTREE_BASE_PA_NODE_PARAMETER_H
+#define __OCTREE_BASE_PA_NODE_PARAMETER_H
 
 // standard headers
-#include <stdint.h>
-#include <iostream>
-#include <cstddef>
+#include <string>
 
-//**************************[cNodeStampedBasePa]*******************************
-template <typename NODE>
-class cNodeStampedBasePa : public NODE {
-
+//**************************[cOctreeBasePaNodeParameter]***********************
+class cOctreeBasePaNodeParameter {
   public:
-    typedef NODE                     NodeTypeBase;
-    typedef cNodeStampedBasePa<NODE> NodeTypeFull;
+    cOctreeBasePaNodeParameter(void);
 
-    cNodeStampedBasePa();
-    cNodeStampedBasePa(const cNodeStampedBasePa<NODE>& other);
-    cNodeStampedBasePa(const cTimePa &timestamp);
-    virtual ~cNodeStampedBasePa();
+    //! name of the topic for subscribing a pointcloud ("~in_cloud") -
+    //! new type (pointcloud2)
+    std::string topic_in_cloud_;
+    //! name of the topic for subscribing a pointcloud ("~in_cloud_old") -
+    //! old type (pointcloud)
+    std::string topic_in_cloud_old_;
+    //! name of the topic for subscribing a laserscan ("~in_laser")
+    std::string topic_in_laser_;
 
-    bool operator==(const cNodeStampedBasePa<NODE>& other) const;
+    //! name of the topic for publishing the octomap ("~out_octomap")
+    std::string topic_out_octomap_;
+    //! name of the topic for publishing the octomap ("~out_octomap_full")
+    std::string topic_out_octomap_full_;
 
-    void copyData(const cNodeStampedBasePa<NODE>& from);
-
-    // streaming (saving and loading)
-    virtual std::istream& readData(std::istream &s);
-    virtual std::ostream& writeData(std::ostream &s) const;
-
-    // timestamp
-    inline const cTimePa& getTimestamp() const;
-    inline void setTimestamp(const cTimePa &timestamp);
-    inline void updateTimestamp(const cTimePa &timestamp);
-
-    // update occupancy and timesteps of inner nodes
-    inline void updateTimestampChildren();
-    inline void updateOccupancyChildren();
-
-    // deprecated - this is moved to the octree itself or
-    //              it is using virtual functions (V1.8)
-    // but we are using an older version (ros indigo == V1.6)
-    bool createChild(unsigned int i);
-    virtual inline NodeTypeFull* getChild(unsigned int i);
-    virtual inline const NodeTypeFull* getChild(unsigned int i) const;
-    bool collapsible(void) const;
-    bool deleteChild(unsigned int i);
-    bool pruneNode(void);
-    void expandNode(void);
-
-    std::istream& readValue (std::istream &s);
-    std::ostream& writeValue(std::ostream &s) const;
-
-  protected:
-    cTimePa timestamp;
+    //! name of the topic for publishing free voxels as pointcloud
+    //! ("~out_cloud_free")
+    std::string topic_out_cloud_free_;
+    //! name of the topic for publishing occupied voxels as pointcloud
+    //! ("~out_cloud_occupied")
+    std::string topic_out_cloud_occupied_;
 };
 
-#include "node_stamped_base_pa.hxx"
-
-#endif //#ifndef NODE_STAMPED_BASE_PA_H
+#endif // __OCTREE_BASE_PA_NODE_PARAMETER_H

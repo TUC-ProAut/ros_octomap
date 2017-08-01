@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* time_pa.h                                                                   *
-* =========                                                                   *
+* octree_stamped_pa.h                                                         *
+* ===================                                                         *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,34 +43,58 @@
 *                                                                             *
 ******************************************************************************/
 
+#ifndef OCTREE_STAMPED_PA_H
+#define OCTREE_STAMPED_PA_H
 
-#ifndef TIME_PA_H
-#define TIME_PA_H
+// local headers
+#include "octomap_pa/octree_stamped_base_pa.h"
+
+// additional libraries
+#include <octomap/octomap.h>
+#include <octomap/OcTreeNode.h>
+#include <octomap/OccupancyOcTreeBase.h>
 
 // standard headers
-#include <stdint.h>
-#include <cstddef>
+#include <string>
 
-//**************************[cTimePa]******************************************
-class cTimePa {
+
+//**************************[cOcTreeStampedPa]*********************************
+class cOcTreeStampedPa : public cOcTreeStampedBasePa <
+  octomap::OccupancyOcTreeBase, octomap::OcTreeNode> {
 
   public:
 
-    cTimePa (const int32_t seconds = 0, const int32_t nanoseconds = 0);
-    cTimePa (const double seconds);
-    cTimePa (const cTimePa &other);
+    typedef octomap::OcTreeNode                   NodeTypeBase;
+    typedef cNodeStampedBasePa<NodeTypeBase>      NodeTypeFull;
+    typedef cOcTreeStampedBasePa <
+      octomap::OccupancyOcTreeBase, NodeTypeBase> TreeTypeBase;
 
-    const cTimePa& operator = (const cTimePa &other);
-    bool operator == (const cTimePa &other) const;
-    bool operator < (const cTimePa &other) const;
-    bool operator > (const cTimePa &other) const;
-    cTimePa operator - (const cTimePa &other);
-    cTimePa operator + (const cTimePa &other);
+    /// Default constructor, sets resolution of leafs
+    cOcTreeStampedPa(double resolution);
 
-    void fix(void);
+    // Default destructor
+    virtual ~cOcTreeStampedPa(void);
 
-    int32_t seconds;
-    int32_t nanoseconds;
+    /// virtual constructor: creates a new object of same type
+    /// (Covariant return type requires an up-to-date compiler)
+    cOcTreeStampedPa* create() const;
+
+    virtual std::string getTreeType() const;
+
+  protected:
+     /**
+      * Static member object which ensures that this OcTree's prototype
+      * ends up in the classIDMapping only once
+      */
+     class StaticMemberInitializer {
+       public:
+         StaticMemberInitializer(void);
+
+         void ensureLinking(void);
+     };
+
+     /// to ensure static initialization (only once)
+     static StaticMemberInitializer StaticMemberInit;
 };
 
-#endif //#ifndef TIME_PA_H
+#endif //#ifndef OCTREE_STAMPED_PA_H

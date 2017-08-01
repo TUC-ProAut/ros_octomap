@@ -174,3 +174,30 @@ add_dependencies(octree_stamped_native_node
 target_link_libraries(octree_stamped_native_node
   ${PROJECT_NAME}_stamped_ros
 )
+
+## Install ##
+install(
+  TARGETS
+    ${PROJECT_NAME}_internal
+    ${PROJECT_NAME}_ros
+    ${PROJECT_NAME}_stamped_ros
+    octree_pa_node
+    octree_stamped_pa_node
+    octree_stamped_native_node
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h" PATTERN "*.hxx"
+)
+
+install(DIRECTORY launch/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+  FILES_MATCHING PATTERN "*.launch"
+)
+install(DIRECTORY config/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
+  FILES_MATCHING PATTERN "*.yaml" PATTERN "*.rviz"
+)

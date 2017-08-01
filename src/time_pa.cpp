@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -44,7 +44,7 @@
 ******************************************************************************/
 
 // local headers
-#include "time_pa.h"
+#include "octomap_pa/time_pa.h"
 
 // standard headers
 #include <cmath>

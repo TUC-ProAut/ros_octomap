@@ -1,7 +1,9 @@
 /******************************************************************************
 *                                                                             *
-* octree_stamped_base_pa.h                                                    *
-* ========================                                                    *
+* node_stamped_base_pa.h                                                      *
+* ======================                                                      *
+*                                                                             *
+* File is based on OcTreeStamped.h and OcTreeNode.h                           *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +17,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,52 +45,65 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef OCTREE_STAMPED_BASE_PA_H
-#define OCTREE_STAMPED_BASE_PA_H
+#ifndef NODE_STAMPED_BASE_PA_H
+#define NODE_STAMPED_BASE_PA_H
 
 // local headers
-#include "node_stamped_base_pa.h"
+#include "octomap_pa/time_pa.h"
 
 // standard headers
-#include <string>
+#include <stdint.h>
+#include <iostream>
+#include <cstddef>
 
-//**************************[cOcTreeStampedBasePa]*****************************
-template <template <typename> class OCTREE, typename NODE>
-class cOcTreeStampedBasePa : public OCTREE< cNodeStampedBasePa<NODE> > {
+//**************************[cNodeStampedBasePa]*******************************
+template <typename NODE>
+class cNodeStampedBasePa : public NODE {
 
   public:
-    typedef cNodeStampedBasePa<NODE> NodeTypeFull;
     typedef NODE                     NodeTypeBase;
-    typedef OCTREE< NodeTypeFull >   TreeTypeBase;
+    typedef cNodeStampedBasePa<NODE> NodeTypeFull;
 
-    /// Default constructor, sets resolution of leafs
-    cOcTreeStampedBasePa(double resolution);
+    cNodeStampedBasePa();
+    cNodeStampedBasePa(const cNodeStampedBasePa<NODE>& other);
+    cNodeStampedBasePa(const cTimePa &timestamp);
+    virtual ~cNodeStampedBasePa();
 
-    // Default destructor
-    virtual ~cOcTreeStampedBasePa(void);
+    bool operator==(const cNodeStampedBasePa<NODE>& other) const;
 
-    /// virtual constructor: creates a new object of same type
-    /// (Covariant return type requires an up-to-date compiler)
-    cOcTreeStampedBasePa<OCTREE,NODE>* create() const;
+    void copyData(const cNodeStampedBasePa<NODE>& from);
 
-    virtual void updateNodeLogOdds(NodeTypeFull* node, const float& update)
-      const;
+    // streaming (saving and loading)
+    virtual std::istream& readData(std::istream &s);
+    virtual std::ostream& writeData(std::ostream &s) const;
 
-    void degradeOutdatedNodes(const cTimePa timediff);
+    // timestamp
+    inline const cTimePa& getTimestamp() const;
+    inline void setTimestamp(const cTimePa &timestamp);
+    inline void updateTimestamp(const cTimePa &timestamp);
 
-    /// Used to set internal timestamp (the value will remain until next
-    /// update). Therefore this function must be called before the insertion
-    /// of the related measurement
-    inline void setTimestamp(const cTimePa timestamp);
-    inline const cTimePa& getTimestamp(void) const;
+    // update occupancy and timesteps of inner nodes
+    inline void updateTimestampChildren();
+    inline void updateOccupancyChildren();
+
+    // deprecated - this is moved to the octree itself or
+    //              it is using virtual functions (V1.8)
+    // but we are using an older version (ros indigo == V1.6)
+    bool createChild(unsigned int i);
+    virtual inline NodeTypeFull* getChild(unsigned int i);
+    virtual inline const NodeTypeFull* getChild(unsigned int i) const;
+    bool collapsible(void) const;
+    bool deleteChild(unsigned int i);
+    bool pruneNode(void);
+    void expandNode(void);
+
+    std::istream& readValue (std::istream &s);
+    std::ostream& writeValue(std::ostream &s) const;
 
   protected:
-    /// used to set new data (insertion of measurement) to actual time stamp
-    cTimePa current_timestamp;
-
+    cTimePa timestamp;
 };
 
+#include "octomap_pa/node_stamped_base_pa.hxx"
 
-#include "octree_stamped_base_pa.hxx"
-
-#endif //#ifndef OCTREE_STAMPED_BASE_PA_H
+#endif //#ifndef NODE_STAMPED_BASE_PA_H

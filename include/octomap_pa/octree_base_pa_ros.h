@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -47,8 +47,8 @@
 #define __OCTREE_BASE_PA_ROS_H
 
 // local headers
-#include "addcloud_parameter.h"
-#include "octree_base_pa_ros_parameter.h"
+#include "octomap_pa/addcloud_parameter.h"
+#include "octomap_pa/octree_base_pa_ros_parameter.h"
 
 // ros headers
 #include <ros/ros.h>
@@ -188,6 +188,6 @@ class cOctreeBasePaRos : public OCTREE {
       OctKey &parent) const;
 };
 
-#include "octree_base_pa_ros.hxx"
+#include "octomap_pa/octree_base_pa_ros.hxx"
 
 #endif // __OCTREE_BASE_PA_ROS_H
