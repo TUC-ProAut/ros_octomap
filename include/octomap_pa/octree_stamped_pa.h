@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* octree_stamped_base_pa.h                                                    *
-* ========================                                                    *
+* octree_stamped_pa.h                                                         *
+* ===================                                                         *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,52 +43,58 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef OCTREE_STAMPED_BASE_PA_H
-#define OCTREE_STAMPED_BASE_PA_H
+#ifndef OCTREE_STAMPED_PA_H
+#define OCTREE_STAMPED_PA_H
 
 // local headers
-#include "node_stamped_base_pa.h"
+#include "octomap_pa/octree_stamped_base_pa.h"
+
+// additional libraries
+#include <octomap/octomap.h>
+#include <octomap/OcTreeNode.h>
+#include <octomap/OccupancyOcTreeBase.h>
 
 // standard headers
 #include <string>
 
-//**************************[cOcTreeStampedBasePa]*****************************
-template <template <typename> class OCTREE, typename NODE>
-class cOcTreeStampedBasePa : public OCTREE< cNodeStampedBasePa<NODE> > {
+
+//**************************[cOcTreeStampedPa]*********************************
+class cOcTreeStampedPa : public cOcTreeStampedBasePa <
+  octomap::OccupancyOcTreeBase, octomap::OcTreeNode> {
 
   public:
-    typedef cNodeStampedBasePa<NODE> NodeTypeFull;
-    typedef NODE                     NodeTypeBase;
-    typedef OCTREE< NodeTypeFull >   TreeTypeBase;
+
+    typedef octomap::OcTreeNode                   NodeTypeBase;
+    typedef cNodeStampedBasePa<NodeTypeBase>      NodeTypeFull;
+    typedef cOcTreeStampedBasePa <
+      octomap::OccupancyOcTreeBase, NodeTypeBase> TreeTypeBase;
 
     /// Default constructor, sets resolution of leafs
-    cOcTreeStampedBasePa(double resolution);
+    cOcTreeStampedPa(double resolution);
 
     // Default destructor
-    virtual ~cOcTreeStampedBasePa(void);
+    virtual ~cOcTreeStampedPa(void);
 
     /// virtual constructor: creates a new object of same type
     /// (Covariant return type requires an up-to-date compiler)
-    cOcTreeStampedBasePa<OCTREE,NODE>* create() const;
+    cOcTreeStampedPa* create() const;
 
-    virtual void updateNodeLogOdds(NodeTypeFull* node, const float& update)
-      const;
-
-    void degradeOutdatedNodes(const cTimePa timediff);
-
-    /// Used to set internal timestamp (the value will remain until next
-    /// update). Therefore this function must be called before the insertion
-    /// of the related measurement
-    inline void setTimestamp(const cTimePa timestamp);
-    inline const cTimePa& getTimestamp(void) const;
+    virtual std::string getTreeType() const;
 
   protected:
-    /// used to set new data (insertion of measurement) to actual time stamp
-    cTimePa current_timestamp;
+     /**
+      * Static member object which ensures that this OcTree's prototype
+      * ends up in the classIDMapping only once
+      */
+     class StaticMemberInitializer {
+       public:
+         StaticMemberInitializer(void);
 
+         void ensureLinking(void);
+     };
+
+     /// to ensure static initialization (only once)
+     static StaticMemberInitializer StaticMemberInit;
 };
 
-
-#include "octree_stamped_base_pa.hxx"
-
-#endif //#ifndef OCTREE_STAMPED_BASE_PA_H
+#endif //#ifndef OCTREE_STAMPED_PA_H

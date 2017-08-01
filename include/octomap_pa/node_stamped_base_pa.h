@@ -17,7 +17,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -49,7 +49,7 @@
 #define NODE_STAMPED_BASE_PA_H
 
 // local headers
-#include "time_pa.h"
+#include "octomap_pa/time_pa.h"
 
 // standard headers
 #include <stdint.h>
@@ -86,10 +86,24 @@ class cNodeStampedBasePa : public NODE {
     inline void updateTimestampChildren();
     inline void updateOccupancyChildren();
 
+    // deprecated - this is moved to the octree itself or
+    //              it is using virtual functions (V1.8)
+    // but we are using an older version (ros indigo == V1.6)
+    bool createChild(unsigned int i);
+    virtual inline NodeTypeFull* getChild(unsigned int i);
+    virtual inline const NodeTypeFull* getChild(unsigned int i) const;
+    bool collapsible(void) const;
+    bool deleteChild(unsigned int i);
+    bool pruneNode(void);
+    void expandNode(void);
+
+    std::istream& readValue (std::istream &s);
+    std::ostream& writeValue(std::ostream &s) const;
+
   protected:
     cTimePa timestamp;
 };
 
-#include "node_stamped_base_pa.hxx"
+#include "octomap_pa/node_stamped_base_pa.hxx"
 
 #endif //#ifndef NODE_STAMPED_BASE_PA_H

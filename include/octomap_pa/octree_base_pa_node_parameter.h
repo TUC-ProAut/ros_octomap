@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* octree_pa_ros.h                                                             *
-* ===============                                                             *
+* octree_base_pa_node_parameter.h                                             *
+* ===============================                                             *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,32 +43,37 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef __OCTREE_PA_ROS_H
-#define __OCTREE_PA_ROS_H
+#ifndef __OCTREE_BASE_PA_NODE_PARAMETER_H
+#define __OCTREE_BASE_PA_NODE_PARAMETER_H
 
-// local headers
-#include "octree_base_pa_ros.h"
+// standard headers
+#include <string>
 
-// ros headers
-#include <ros/ros.h>
-
-// additional libraries
-#include <octomap/OcTree.h>
-
-
-//**************************[cOctreePaRos]*************************************
-class cOctreePaRos : public cOctreeBasePaRos
-  <octomap::OcTree> {
+//**************************[cOctreeBasePaNodeParameter]***********************
+class cOctreeBasePaNodeParameter {
   public:
-    typedef cOctreeBasePaRos<OcTree> TreeTypeBase;
+    cOctreeBasePaNodeParameter(void);
 
-    //! default constructor
-    cOctreePaRos(const double resolution);
+    //! name of the topic for subscribing a pointcloud ("~in_cloud") -
+    //! new type (pointcloud2)
+    std::string topic_in_cloud_;
+    //! name of the topic for subscribing a pointcloud ("~in_cloud_old") -
+    //! old type (pointcloud)
+    std::string topic_in_cloud_old_;
+    //! name of the topic for subscribing a laserscan ("~in_laser")
+    std::string topic_in_laser_;
 
-    //! default destructor
-    virtual ~cOctreePaRos();
+    //! name of the topic for publishing the octomap ("~out_octomap")
+    std::string topic_out_octomap_;
+    //! name of the topic for publishing the octomap ("~out_octomap_full")
+    std::string topic_out_octomap_full_;
 
-  protected:
+    //! name of the topic for publishing free voxels as pointcloud
+    //! ("~out_cloud_free")
+    std::string topic_out_cloud_free_;
+    //! name of the topic for publishing occupied voxels as pointcloud
+    //! ("~out_cloud_occupied")
+    std::string topic_out_cloud_occupied_;
 };
 
-#endif // __OCTREE_PA_ROS_H
+#endif // __OCTREE_BASE_PA_NODE_PARAMETER_H

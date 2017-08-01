@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -44,10 +44,10 @@
 ******************************************************************************/
 
 // local headers
-#include "octree_pa_node.h"
+#include "octomap_pa/octree_pa_node.h"
 
 // ros headers
-#include <parameter_pa_ros.h>
+#include <parameter_pa/parameter_pa_ros.h>
 
 // standard headers
 #include <string>

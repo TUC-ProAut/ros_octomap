@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* octree_stamped_pa.h                                                         *
-* ===================                                                         *
+* octree_base_pa_ros_parameter.h                                              *
+* ==============================                                              *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,58 +43,32 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef OCTREE_STAMPED_PA_H
-#define OCTREE_STAMPED_PA_H
+#ifndef __OCTREE_BASE_PA_ROS_PARAMETER_H
+#define __OCTREE_BASE_PA_ROS_PARAMETER_H
 
-// local headers
-#include "octree_stamped_base_pa.h"
-
-// additional libraries
-#include <octomap/octomap.h>
-#include <octomap/OcTreeNode.h>
-#include <octomap/OccupancyOcTreeBase.h>
+// ros headers
+#include <ros/ros.h>
 
 // standard headers
 #include <string>
 
-
-//**************************[cOcTreeStampedPa]*********************************
-class cOcTreeStampedPa : public cOcTreeStampedBasePa <
-  octomap::OccupancyOcTreeBase, octomap::OcTreeNode> {
-
+//**************************[cOctreeBasePaRosParameter]************************
+class cOctreeBasePaRosParameter {
   public:
+    cOctreeBasePaRosParameter(void);
+    cOctreeBasePaRosParameter(const cOctreeBasePaRosParameter &other);
+    cOctreeBasePaRosParameter& operator = (const
+      cOctreeBasePaRosParameter &other);
 
-    typedef octomap::OcTreeNode                   NodeTypeBase;
-    typedef cNodeStampedBasePa<NodeTypeBase>      NodeTypeFull;
-    typedef cOcTreeStampedBasePa <
-      octomap::OccupancyOcTreeBase, NodeTypeBase> TreeTypeBase;
+    //! name of the output frame ("map")
+    std::string output_frame_;
 
-    /// Default constructor, sets resolution of leafs
-    cOcTreeStampedPa(double resolution);
+    //! duration before a time jump back in time is detected
+    ros::Duration timejump_detection_duration;
 
-    // Default destructor
-    virtual ~cOcTreeStampedPa(void);
-
-    /// virtual constructor: creates a new object of same type
-    /// (Covariant return type requires an up-to-date compiler)
-    cOcTreeStampedPa* create() const;
-
-    virtual std::string getTreeType() const;
-
-  protected:
-     /**
-      * Static member object which ensures that this OcTree's prototype
-      * ends up in the classIDMapping only once
-      */
-     class StaticMemberInitializer {
-       public:
-         StaticMemberInitializer(void);
-
-         void ensureLinking(void);
-     };
-
-     /// to ensure static initialization (only once)
-     static StaticMemberInitializer StaticMemberInit;
+    //! time increment for output messages for bridging small time jumps
+    ros::Duration timejump_increment;
 };
 
-#endif //#ifndef OCTREE_STAMPED_PA_H
+
+#endif // __OCTREE_BASE_PA_ROS_PARAMETER_H

@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* octree_base_pa_ros_parameter.h                                              *
-* ==============================                                              *
+* octree_stamped_native_ros.h                                                 *
+* ===========================                                                 *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,32 +43,43 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef __OCTREE_BASE_PA_ROS_PARAMETER_H
-#define __OCTREE_BASE_PA_ROS_PARAMETER_H
+#ifndef __OCTREE_STAMPED_NATIVE_ROS_H
+#define __OCTREE_STAMPED_NATIVE_ROS_H
+
+// local headers
+#include "octomap_pa/octree_base_pa_ros.h"
+#include "octomap_pa/octree_stamped_pa_ros_parameter.h"
 
 // ros headers
 #include <ros/ros.h>
 
-// standard headers
-#include <string>
+// additional libraries
+#include <octomap/OcTreeStamped.h>
 
-//**************************[cOctreeBasePaRosParameter]************************
-class cOctreeBasePaRosParameter {
+
+//**************************[cOctreeStampedNativeRos]**************************
+class cOctreeStampedNativeRos : public cOctreeBasePaRos
+  <octomap::OcTreeStamped> {
   public:
-    cOctreeBasePaRosParameter(void);
-    cOctreeBasePaRosParameter(const cOctreeBasePaRosParameter &other);
-    cOctreeBasePaRosParameter& operator = (const
-      cOctreeBasePaRosParameter &other);
+    typedef cOctreeBasePaRos<OcTreeStamped> TreeTypeBase;
 
-    //! name of the output frame ("map")
-    std::string output_frame_;
+    //! default constructor
+    cOctreeStampedNativeRos(const double resolution);
 
-    //! duration before a time jump back in time is detected
-    ros::Duration timejump_detection_duration;
+    //! default destructor
+    virtual ~cOctreeStampedNativeRos();
 
-    //! time increment for output messages for bridging small time jumps
-    ros::Duration timejump_increment;
+    //! degrading outdated nodes
+    void degradeOutdatedNodes(void);
+
+    //! parameters
+    cOctreeStampedPaRosParameter rosparams_;
+
+  protected:
+    ros::Time last_degrading_time_;
+
+    //! helper function for automatic degrading
+    void checkDegrading(void);
 };
 
-
-#endif // __OCTREE_BASE_PA_ROS_PARAMETER_H
+#endif // __OCTREE_STAMPED_NATIVE_ROS_H

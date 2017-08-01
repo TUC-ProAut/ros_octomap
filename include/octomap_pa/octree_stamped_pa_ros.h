@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* octree_stamped_base_pa.hxx                                                  *
-* ==========================                                                  *
+* octree_stamped_pa_ros.h                                                     *
+* =======================                                                     *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,56 +43,50 @@
 *                                                                             *
 ******************************************************************************/
 
-template <template <typename> class OCTREE, typename NODE>
-  cOcTreeStampedBasePa<OCTREE, NODE>::cOcTreeStampedBasePa(double resolution)
-  : TreeTypeBase(resolution) {
+#ifndef __OCTREE_STAMPED_PA_ROS_H
+#define __OCTREE_STAMPED_PA_ROS_H
 
-}
+// local headers
+#include "octomap_pa/time_pa.h"
+#include "octomap_pa/octree_base_pa_ros.h"
+#include "octomap_pa/octree_stamped_pa.h"
+#include "octomap_pa/octree_stamped_pa_ros_parameter.h"
 
-template <template <typename> class OCTREE, typename NODE>
-  cOcTreeStampedBasePa<OCTREE, NODE>::~cOcTreeStampedBasePa() {
+// ros headers
+#include <ros/ros.h>
 
-}
+//**************************[cOctreeStampedPaRos]******************************
+class cOctreeStampedPaRos : public cOctreeBasePaRos<cOcTreeStampedPa> {
+  public:
+    typedef cOctreeBasePaRos<cOcTreeStampedPa> TreeTypeBase;
 
-template <template <typename> class OCTREE, typename NODE>
-  cOcTreeStampedBasePa<OCTREE, NODE>* cOcTreeStampedBasePa<OCTREE, NODE>::
-  create() const {
+    //! default constructor
+    cOctreeStampedPaRos(const double resolution);
 
-    return new cOcTreeStampedBasePa(TreeTypeBase::resolution);
-}
+    //! default destructor
+    virtual ~cOctreeStampedPaRos();
 
-template <template <typename> class OCTREE, typename NODE>
-  void cOcTreeStampedBasePa<OCTREE, NODE>::updateNodeLogOdds(
-  NodeTypeFull* node, const float& update) const {
+    //! degrading outdated nodes
+    void degradeOutdatedNodes(void);
 
-    TreeTypeBase::updateNodeLogOdds(node, update);
-    node->updateTimestamp(current_timestamp);
-}
+    //! function for returning the time the octomap was last updated
+    ros::Time getLastInsertionTime(void) const;
+    //! function for setting the time the octomap was last updated
+    void setLastInsertionTime(const ros::Time &time);
 
-template <template <typename> class OCTREE, typename NODE>
-  void cOcTreeStampedBasePa<OCTREE, NODE>::degradeOutdatedNodes(
-  const cTimePa timediff) {
+    //! function for converting from cTimePa to ros::Time
+    ros::Time timeToRos(const cTimePa &time) const;
+    //! function for converting from ros::Time to cTimePa
+    cTimePa timeFromRos(const ros::Time &time) const;
 
-    cTimePa timethreshold = current_timestamp - timediff;
+    //! parameters
+    cOctreeStampedPaRosParameter rosparams_;
 
-    for( typename TreeTypeBase::leaf_iterator it = TreeTypeBase::begin_leafs(),
-      end=TreeTypeBase::end_leafs(); it!= end; ++it) {
-        if ( it->getTimestamp() < timethreshold) {
-            TreeTypeBase::deleteNode(it.getKey());
-        }
-    }
-}
+  protected:
+    ros::Time last_degrading_time_;
 
-template <template <typename> class OCTREE, typename NODE>
-  inline void cOcTreeStampedBasePa<OCTREE, NODE>::setTimestamp(
-  const cTimePa timestamp) {
+    //! helper function for automatic degrading
+    void checkDegrading(void);
+};
 
-    this->current_timestamp = timestamp;
-}
-
-template <template <typename> class OCTREE, typename NODE>
-  inline const cTimePa& cOcTreeStampedBasePa<OCTREE, NODE>::getTimestamp(
-  void) const {
-
-    return current_timestamp;
-}
+#endif // __OCTREE_STAMPED_PA_ROS_H

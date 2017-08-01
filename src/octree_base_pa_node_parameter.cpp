@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -44,7 +44,7 @@
 ******************************************************************************/
 
 // local headers
-#include "octree_base_pa_node_parameter.h"
+#include "octomap_pa/octree_base_pa_node_parameter.h"
 
 //**************************[cOctreeBasePaNodeParameter]***********************
 cOctreeBasePaNodeParameter::cOctreeBasePaNodeParameter() {

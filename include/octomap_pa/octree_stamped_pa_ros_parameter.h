@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* octree_base_pa_node_parameter.h                                             *
-* ===============================                                             *
+* octree_stamped_pa_ros_parameter.h                                           *
+* =================================                                           *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,37 +43,29 @@
 *                                                                             *
 ******************************************************************************/
 
-#ifndef __OCTREE_BASE_PA_NODE_PARAMETER_H
-#define __OCTREE_BASE_PA_NODE_PARAMETER_H
+#ifndef __OCTREE_STAMPED_PA_ROS_PARAMETER_H
+#define __OCTREE_STAMPED_PA_ROS_PARAMETER_H
 
 // standard headers
 #include <string>
 
-//**************************[cOctreeBasePaNodeParameter]***********************
-class cOctreeBasePaNodeParameter {
+//**************************[cOctreeStampedPaRosParameter]*********************
+class cOctreeStampedPaRosParameter {
   public:
-    cOctreeBasePaNodeParameter(void);
+    cOctreeStampedPaRosParameter(void);
+    cOctreeStampedPaRosParameter(const cOctreeStampedPaRosParameter &other);
+    cOctreeStampedPaRosParameter& operator = (const
+      cOctreeStampedPaRosParameter &other);
 
-    //! name of the topic for subscribing a pointcloud ("~in_cloud") -
-    //! new type (pointcloud2)
-    std::string topic_in_cloud_;
-    //! name of the topic for subscribing a pointcloud ("~in_cloud_old") -
-    //! old type (pointcloud)
-    std::string topic_in_cloud_old_;
-    //! name of the topic for subscribing a laserscan ("~in_laser")
-    std::string topic_in_laser_;
+    //! duration how long the outdated nodes will be kept (60s)
+    double degrading_time_;
 
-    //! name of the topic for publishing the octomap ("~out_octomap")
-    std::string topic_out_octomap_;
-    //! name of the topic for publishing the octomap ("~out_octomap_full")
-    std::string topic_out_octomap_full_;
+    //! turns on automatic degrading (true)
+    bool auto_degrading_;
 
-    //! name of the topic for publishing free voxels as pointcloud
-    //! ("~out_cloud_free")
-    std::string topic_out_cloud_free_;
-    //! name of the topic for publishing occupied voxels as pointcloud
-    //! ("~out_cloud_occupied")
-    std::string topic_out_cloud_occupied_;
+    //! intervall for automatic degrading (2.0s)
+    double auto_degrading_intervall_;
 };
 
-#endif // __OCTREE_BASE_PA_NODE_PARAMETER_H
+
+#endif // __OCTREE_STAMPED_PA_ROS_PARAMETER_H

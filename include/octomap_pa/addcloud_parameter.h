@@ -1,7 +1,7 @@
 /******************************************************************************
 *                                                                             *
-* time_pa.h                                                                   *
-* =========                                                                   *
+* addcloud_parameter.h                                                        *
+* ====================                                                        *
 *                                                                             *
 *******************************************************************************
 *                                                                             *
@@ -15,7 +15,7 @@
 *                                                                             *
 * New BSD License                                                             *
 *                                                                             *
-* Copyright (c) 2015-2016, Peter Weissig, Technische Universität Chemnitz     *
+* Copyright (c) 2015-2017, Peter Weissig, Technische Universität Chemnitz     *
 * All rights reserved.                                                        *
 *                                                                             *
 * Redistribution and use in source and binary forms, with or without          *
@@ -43,34 +43,33 @@
 *                                                                             *
 ******************************************************************************/
 
+#ifndef __ADDCLOUD_PARAMETER_H
+#define __ADDCLOUD_PARAMETER_H
 
-#ifndef TIME_PA_H
-#define TIME_PA_H
-
-// standard headers
-#include <stdint.h>
-#include <cstddef>
-
-//**************************[cTimePa]******************************************
-class cTimePa {
-
+//**************************[cAddCloudParameter]*******************************
+class cAddCloudParameter {
   public:
+    cAddCloudParameter(void);
+    cAddCloudParameter(const cAddCloudParameter &other);
+    cAddCloudParameter& operator = (const cAddCloudParameter &other);
 
-    cTimePa (const int32_t seconds = 0, const int32_t nanoseconds = 0);
-    cTimePa (const double seconds);
-    cTimePa (const cTimePa &other);
+    // octomap parameter
+    //! octomap parameter: probability for a "hit"
+    double map_prob_hit_;
+    //! octomap parameter: probability for a "miss"
+    double map_prob_miss_;
 
-    const cTimePa& operator = (const cTimePa &other);
-    bool operator == (const cTimePa &other) const;
-    bool operator < (const cTimePa &other) const;
-    bool operator > (const cTimePa &other) const;
-    cTimePa operator - (const cTimePa &other);
-    cTimePa operator + (const cTimePa &other);
+    //! pointcloud insertion parameter: use pcl-transform instead of
+    //! octomap-transform (speeds up)
+    bool pcd_explicit_transform_;
 
-    void fix(void);
-
-    int32_t seconds;
-    int32_t nanoseconds;
+    //! pointcloud insertion parameter: use voxel-filter (speeds up)
+    bool pcd_voxel_active_;
+    //! pointcloud insertion parameter: use pcl-filter instead of
+    //! octomap-filter (slows down)
+    bool pcd_voxel_explicit_;
+    //! pointcloud insertion parameter: relative resolution of pcl-filter
+    double pcd_voxel_explicit_relative_resolution_;
 };
 
-#endif //#ifndef TIME_PA_H
+#endif // __ADDCLOUD_PARAMETER_H
