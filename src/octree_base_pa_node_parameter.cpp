@@ -50,13 +50,13 @@
 cOctreeBasePaNodeParameter::cOctreeBasePaNodeParameter() {
 
     // topics
-    topic_in_cloud_     = "~in_cloud"    ;
-    topic_in_cloud_old_ = "~in_cloud_old";
-    topic_in_laser_     = "~in_laser"    ;
+    topic_in_cloud_     = "~/in_cloud"    ;
+    topic_in_cloud_old_ = "~/in_cloud_old";
+    topic_in_laser_     = "~/in_laser"    ;
 
-    topic_out_octomap_      = "~out_octomap"     ;
-    topic_out_octomap_full_ = "~out_octomap_full";
+    topic_out_octomap_      = "~/out_octomap"     ;
+    topic_out_octomap_full_ = "~/out_octomap_full";
 
-    topic_out_cloud_free_     = "~out_cloud_free"    ;
-    topic_out_cloud_occupied_ = "~out_cloud_occupied";
+    topic_out_cloud_free_     = "~/out_cloud_free"    ;
+    topic_out_cloud_occupied_ = "~/out_cloud_occupied";
 }
