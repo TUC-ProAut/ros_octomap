@@ -69,51 +69,51 @@ cOctreeStampedPaNode::cOctreeStampedPaNode() : cOctreeStampedPaRos(0.1),
 
     cParameterPaRos paramloader;
 
-    paramloader.load("~output_frame", rosparams_base_.output_frame_);
+    paramloader.load("~/output_frame", rosparams_base_.output_frame_);
 
     // octomap parameter
     double temp;
     temp = 0.1 ;
-    paramloader.load("~map_resolution"    , temp); setResolution      (temp);
+    paramloader.load("~/map_resolution"    , temp); setResolution      (temp);
     temp = 0.5 ;
-    paramloader.load("~map_prob_threshold", temp); setOccupancyThres  (temp);
+    paramloader.load("~/map_prob_threshold", temp); setOccupancyThres  (temp);
     temp = 0.12;
-    paramloader.load("~map_clamp_min"     , temp); setClampingThresMin(temp);
+    paramloader.load("~/map_clamp_min"     , temp); setClampingThresMin(temp);
     temp = 0.97;
-    paramloader.load("~map_clamp_max"     , temp); setClampingThresMax(temp);
+    paramloader.load("~/map_clamp_max"     , temp); setClampingThresMax(temp);
 
     // pointcloud insertion parameter
-    paramloader.load("~map_prob_hit"      , addparams_.map_prob_hit_      );
-    paramloader.load("~map_prob_miss"     , addparams_.map_prob_miss_     );
-    paramloader.load("~pcd_voxel_active"  , addparams_.pcd_voxel_active_  );
-    paramloader.load("~pcd_voxel_explicit", addparams_.pcd_voxel_explicit_);
-    paramloader.load("~pcd_voxel_explicit_relative_resolution",
+    paramloader.load("~/map_prob_hit"      , addparams_.map_prob_hit_      );
+    paramloader.load("~/map_prob_miss"     , addparams_.map_prob_miss_     );
+    paramloader.load("~/pcd_voxel_active"  , addparams_.pcd_voxel_active_  );
+    paramloader.load("~/pcd_voxel_explicit", addparams_.pcd_voxel_explicit_);
+    paramloader.load("~/pcd_voxel_explicit_relative_resolution",
       addparams_.pcd_voxel_explicit_relative_resolution_);
-    paramloader.load("~pcd_explicit_transform",
+    paramloader.load("~/pcd_explicit_transform",
       addparams_.pcd_explicit_transform_);
 
     // degrading parameter
-    paramloader.load("~degrading_time"          , rosparams_.degrading_time_);
-    paramloader.load("~auto_degrading"          , rosparams_.auto_degrading_);
-    paramloader.load("~auto_degrading_intervall",
+    paramloader.load("~/degrading_time"          , rosparams_.degrading_time_);
+    paramloader.load("~/auto_degrading"          , rosparams_.auto_degrading_);
+    paramloader.load("~/auto_degrading_intervall",
       rosparams_.auto_degrading_intervall_);
 
     // topics in
-    paramloader.load_topic("~topic_in_cloud"    ,
+    paramloader.load_topic("~/topic_in_cloud"    ,
       nodeparams_.topic_in_cloud_    );
-    paramloader.load_topic("~topic_in_cloud_old",
+    paramloader.load_topic("~/topic_in_cloud_old",
       nodeparams_.topic_in_cloud_old_);
-    paramloader.load_topic("~topic_in_laser"    ,
+    paramloader.load_topic("~/topic_in_laser"    ,
       nodeparams_.topic_in_laser_    );
 
     // topics out
-    paramloader.load_topic("~topic_out_octomap"       ,
+    paramloader.load_topic("~/topic_out_octomap"       ,
       nodeparams_.topic_out_octomap_);
-    paramloader.load_topic("~topic_out_octomap_full"  ,
+    paramloader.load_topic("~/topic_out_octomap_full"  ,
       nodeparams_.topic_out_octomap_full_);
-    paramloader.load_topic("~topic_out_cloud_free"    ,
+    paramloader.load_topic("~/topic_out_cloud_free"    ,
       nodeparams_.topic_out_cloud_free_);
-    paramloader.load_topic("~topic_out_cloud_occupied",
+    paramloader.load_topic("~/topic_out_cloud_occupied",
       nodeparams_.topic_out_cloud_occupied_);
 
     // Subscriber for pointclouds
@@ -152,7 +152,7 @@ cOctreeStampedPaNode::cOctreeStampedPaNode() : cOctreeStampedPaRos(0.1),
       nodeparams_.topic_out_cloud_occupied_, 10, true);
 
 
-    std::string str_service("~");
+    std::string str_service("~/");
     paramloader.resolve_ressourcename(str_service);
     // service for clearing the octomap
     srv_clear_ = nh_.advertiseService(str_service + "clear",

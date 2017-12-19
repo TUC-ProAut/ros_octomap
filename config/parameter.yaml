@@ -1,17 +1,17 @@
 ###### topics and services ######
 
 ## input topics (pointclouds)
-#topic_in_cloud           : "~in_cloud"
-#topic_in_cloud_old       : "~in_cloud_old"
-#topic_in_laser           : "~in_laser"
+#topic_in_cloud           : "~/in_cloud"
+#topic_in_cloud_old       : "~/in_cloud_old"
+#topic_in_laser           : "~/in_laser"
 
 ## output topics (binary octomap and full octomap)
-#topic_out_octomap        : "~out_octomap"
-#topic_out_octomap_full   : "~out_octomap_full"
+#topic_out_octomap        : "~/out_octomap"
+#topic_out_octomap_full   : "~/out_octomap_full"
 
 ## additional output topics (pointclouds)
-#topic_out_cloud_free     : "~out_cloud_free"
-#topic_out_cloud_occupied : "~out_cloud_occupied"
+#topic_out_cloud_free     : "~/out_cloud_free"
+#topic_out_cloud_occupied : "~/out_cloud_occupied"
 
 ###### octomap ######
 
