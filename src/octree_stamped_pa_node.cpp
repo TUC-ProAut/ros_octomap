@@ -99,21 +99,21 @@ cOctreeStampedPaNode::cOctreeStampedPaNode() : cOctreeStampedPaRos(0.1),
       rosparams_.auto_degrading_intervall_);
 
     // topics in
-    paramloader.load_topic("~/topic_in_cloud"    ,
+    paramloader.loadTopic("~/topic_in_cloud"    ,
       nodeparams_.topic_in_cloud_    );
-    paramloader.load_topic("~/topic_in_cloud_old",
+    paramloader.loadTopic("~/topic_in_cloud_old",
       nodeparams_.topic_in_cloud_old_);
-    paramloader.load_topic("~/topic_in_laser"    ,
+    paramloader.loadTopic("~/topic_in_laser"    ,
       nodeparams_.topic_in_laser_    );
 
     // topics out
-    paramloader.load_topic("~/topic_out_octomap"       ,
+    paramloader.loadTopic("~/topic_out_octomap"       ,
       nodeparams_.topic_out_octomap_);
-    paramloader.load_topic("~/topic_out_octomap_full"  ,
+    paramloader.loadTopic("~/topic_out_octomap_full"  ,
       nodeparams_.topic_out_octomap_full_);
-    paramloader.load_topic("~/topic_out_cloud_free"    ,
+    paramloader.loadTopic("~/topic_out_cloud_free"    ,
       nodeparams_.topic_out_cloud_free_);
-    paramloader.load_topic("~/topic_out_cloud_occupied",
+    paramloader.loadTopic("~/topic_out_cloud_occupied",
       nodeparams_.topic_out_cloud_occupied_);
 
     // Subscriber for pointclouds
@@ -153,7 +153,7 @@ cOctreeStampedPaNode::cOctreeStampedPaNode() : cOctreeStampedPaRos(0.1),
 
 
     std::string str_service("~/");
-    paramloader.resolve_ressourcename(str_service);
+    str_service = paramloader.resolveRessourcename(str_service);
     // service for clearing the octomap
     srv_clear_ = nh_.advertiseService(str_service + "clear",
       &cOctreeStampedPaNode::clearCallbackSrv, this);
@@ -326,7 +326,7 @@ bool cOctreeStampedPaNode::saveCallbackSrv(
     std::string filename;
     filename = req.filename;
     cParameterPaRos par;
-    par.replace_findpack(filename);
+    par.replaceFindpack(filename);
 
     //res.ok = writeBinary(filename);
     res.ok = this->write(filename);
@@ -344,7 +344,7 @@ bool cOctreeStampedPaNode::loadCallbackSrv(
     std::string filename;
     filename = req.filename;
     cParameterPaRos par;
-    par.replace_findpack(filename);
+    par.replaceFindpack(filename);
 
     // res.ok = readBinary(filename);
     res.ok = readFull(filename);
