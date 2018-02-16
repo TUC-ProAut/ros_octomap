@@ -1,32 +1,12 @@
-###### topics and services ######
+###### degrading of nodes ######
 
-## input topics (pointclouds)
-#topic_in_cloud           : "~/in_cloud"
-#topic_in_cloud_old       : "~/in_cloud_old"
-#topic_in_laser           : "~/in_laser"
+## duration how long the outdated nodes will be kept (60s)
+#degrading_time: 60.0 # seconds
+## turns on automatic degrading
+#auto_degrading: true
+## intervall for automatic degrading
+#auto_degrading_intervall: 2.0 # seconds
 
-## output topics (binary octomap and full octomap)
-#topic_out_octomap        : "~/out_octomap"
-#topic_out_octomap_full   : "~/out_octomap_full"
-
-## additional output topics (pointclouds)
-#topic_out_cloud_free     : "~/out_cloud_free"
-#topic_out_cloud_occupied : "~/out_cloud_occupied"
-
-###### octomap ######
-
-## frame of the octomap (coordinate system for insertion and output)
-#output_frame  :  "map"
-
-## resolution of octomap (side length of one voxel)
-#map_resolution: 0.1  # meters
-
-## threshold for binary evaluation of single voxel (occupied or free)
-#map_prob_threshold:  0.5  # 50%
-
-## clamping values (to promote prunning)
-#map_clamp_min:  0.12  # 12%
-#map_clamp_max:  0.97  # 97%
 
 ###### pointcloud insertion ######
 
@@ -41,16 +21,39 @@
 ## relative resolution of pcl-filter
 #pcd_voxel_explicit_relative_resolution: 0.5
 
-## probalitity that a positiv mesaurement relates to a occupied voxel
+## probalitity that a positive measurement relates to a occupied voxel
 #map_prob_hit :  0.7  # 70%
-## probalitity that a negativ mesaurement relates to a occupied voxel
+## probalitity that a negative measurement relates to a occupied voxel
 #map_prob_miss:  0.4  # 40%
 
-###### degrading of nodes ######
 
-## duration how long the outdated nodes will be kept (60s)
-#degrading_time: 60.0 # seconds
-## turns on automatic degrading
-#auto_degrading: true
-## intervall for automatic degrading
-#auto_degrading_intervall: 2.0 # seconds
+###### octomap in general ######
+
+## frame of the octomap (coordinate system for insertion and output)
+#output_frame  :  "map"
+
+## resolution of octomap (side length of one voxel)
+#map_resolution: 0.1  # meters
+
+## threshold for binary evaluation of single voxels (occupied or free)
+#map_prob_threshold:  0.5  # 50%
+
+## clamping values (to promote prunning)
+#map_clamp_min:  0.12  # 12%
+#map_clamp_max:  0.97  # 97%
+
+
+###### topics and services ######
+
+## input topics (pointclouds)
+#topic_in_cloud           : "~/in_cloud"
+#topic_in_cloud_old       : "~/in_cloud_old"
+#topic_in_laser           : "~/in_laser"
+
+## output topics (binary octomap and full octomap)
+#topic_out_octomap        : "~/out_octomap"
+#topic_out_octomap_full   : "~/out_octomap_full"
+
+## additional output topics (pointclouds)
+#topic_out_cloud_free     : "~/out_cloud_free"
+#topic_out_cloud_occupied : "~/out_cloud_occupied"
