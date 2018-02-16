@@ -10,15 +10,24 @@ For further explanations, you may want to have a look at this [workshop abstract
 
 ## Nodes
 
-Our implementation:
+Our implementation of decay:
 ```
 rosrun octomap_pa octree_stamped_pa_node
+roslaunch octomap_pa octomap_stamped_pa.launch
 ```
 
-The native implementation of the [original octomap package](https://octomap.github.io):
+The native implementation of decay by the [original octomap package](https://octomap.github.io):
 ```
 rosrun octomap_pa octree_stamped_native_node
+roslaunch octomap_pa octomap_stamped_native.launch
 ```
+
+Simple node without decay:
+```
+rosrun octomap_pa octree_pa_node
+roslaunch octomap_pa octomap_pa.launch
+```
+
 
 ### Input and Output Topics:
 
@@ -37,12 +46,12 @@ All topics can be remapped using parameters (see below).
 
 ### Services:
 
-Service Name       | Type                                                                                                     | Description
--------------------|----------------------------------------------------------------------------------------------------------|---------------------------------
-"~/clear"          | std_srvs/Empty                                                                                           | Deletes internal octomap.
-"~/getsize"        | [OctomapPaGetSize.srv](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaGetSize.srv)   | Returning number of nodes, total size in bytes and number of inserted measurments.
-"~/save"           | [OctomapPaFileName.srv](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaFileName.srv) | Storing the current octomap as file - timestamps are not saved.
-"~/load"           | [OctomapPaFileName.srv](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaFileName.srv) | Loading a octomap from file - timestamps are ignored.
+Service Name       | Type                                                                                                            | Description
+-------------------|-----------------------------------------------------------------------------------------------------------------|---------------------------------
+"~/clear"          | std_srvs/Empty                                                                                                  | Deletes internal octomap.
+"~/getsize"        | [octomap_pa/OctomapPaGetSize](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaGetSize.srv)   | Returning number of nodes, total size in bytes and number of inserted measurments.
+"~/save"           | [octomap_pa/OctomapPaFileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaFileName.srv) | Storing the current octomap as file - timestamps are not saved.
+"~/load"           | [octomap_pa/OctomapPaFileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaFileName.srv) | Loading a octomap from file - timestamps are ignored.
 
 
 ### Parameters:
@@ -84,7 +93,8 @@ Parameter Name               | Type                 | Description
 "~/topic_out_cloud_occupied" | string               | Name of output topic for occupied voxels.
 
 
-See also [this config file](https://github.com/TUC-ProAut/ros_octomap/blob/master/config/parameter.yaml). It contains all parameters and their default value.
+See also [this config file](https://github.com/TUC-ProAut/ros_octomap/blob/master/config/parameter.yaml).
+It contains all parameters and their default value.
 
 
 ## Links
