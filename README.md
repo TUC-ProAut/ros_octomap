@@ -1,4 +1,4 @@
-# ros_octomap
+# ProAut OctoMap
 
 ## Introduction
 
