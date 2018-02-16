@@ -47,21 +47,34 @@ Service Name       | Type                                                       
 
 ### Parameters:
 
+#### degrading of voxels
 Parameter Name               | Type                 | Description
 -----------------------------|----------------------|-------------------------------------
 "~/degrading_time"           | double               | Duration how long the outdated nodes will be kept.
 "~/auto_degrading"           | bool                 | Turns on automatic degrading.
 "~/auto_degrading_intervall" | double               | Intervall for automatic degrading.
+
+#### pointcloud insertion
+Parameter Name               | Type                 | Description
+-----------------------------|----------------------|-------------------------------------
 "~/map_prob_hit"             | double               | Probability that a positive measurement relates to a occupied voxel.
 "~/map_prob_miss"            | double               | Probability that a negative measurement relates to a occupied voxel.
 "~/pcd_voxel_active"         | bool                 | Use voxel-filter for pointcloud insertion.
 "~/pcd_voxel_explicit"       | bool                 | Use pcl-filter instead of octomap-filter.
 "~/pcd_voxel_explicit_relative_resolution" | double | Relative resolution of pcl-filter.
+
+#### octomap in general
+Parameter Name               | Type                 | Description
+-----------------------------|----------------------|-------------------------------------
 "~/output_frame"             | string               | Coordinate system for insertion and output.
 "~/map_resolution"           | double               | Side length of one voxel (in meters).
 "~/map_prob_threshold"       | double               | Threshold for binary evaluation of single voxels.
 "~/map_clamp_min"            | double               | Lower clamping value of occupancy probability.
 "~/map_clamp_max"            | double               | Upper clamping value of occupancy probability.
+
+#### topics and services
+Parameter Name               | Type                 | Description
+-----------------------------|----------------------|-------------------------------------
 "~/topic_in_cloud"           | string               | Name of input topic for new pointclouds.
 "~/topic_in_cloud_old"       | string               | Name of input topic for old pointclouds.
 "~/topic_in_laser"           | string               | Name of input topic for laser scans.

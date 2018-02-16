@@ -1,6 +1,6 @@
-###### degrading of nodes ######
+###### degrading of voxels ######
 
-## duration how long the outdated nodes will be kept (60s)
+## duration how long the outdated voxels will be kept (60s)
 #degrading_time: 60.0 # seconds
 ## turns on automatic degrading
 #auto_degrading: true
