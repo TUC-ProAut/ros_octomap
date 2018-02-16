@@ -8,7 +8,7 @@ We described our motivation and concept on our [octomap-website](https://www.tu-
 For further explanations, you may want to have a look at this [workshop abstract](http://nbn-resolving.de/urn:nbn:de:bsz:ch1-qucosa-226576).
 
 
-## Node
+## Nodes
 
 Our implementation:
 ```
