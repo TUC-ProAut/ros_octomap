@@ -7,7 +7,7 @@
  * We described our motivation and concept on our <a href="https://www.tu-chemnitz.de/etit/proaut/octo">octomap-website</a> - here you will also find two supportive videos.
  * For further explanations, you may want to have a look at this <a href="http://nbn-resolving.de/urn:nbn:de:bsz:ch1-qucosa-226576">workshop abstract</a>.
  *
- * @section node_sec Node
+ * @section node_sec Nodes
  *
  * Our implementation:
  * @verbatim
