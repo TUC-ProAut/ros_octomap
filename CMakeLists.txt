@@ -7,6 +7,10 @@ add_definitions(${PCL_DEFINITIONS})
 
 find_package(octomap REQUIRED)
 
+# bugfix for g++-Warning
+#   "<command-line>:0:15: warning: missing whitespace after the macro name"
+remove_definitions(-DDISABLE_LIBUSB-1.0)
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp
 
@@ -33,8 +37,7 @@ find_package(catkin REQUIRED COMPONENTS
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${PCL_INCLUDE_DIRS}
-  ${OCTOMAP_INCLUDE_DIRS}
+#  ${OCTOMAP_INCLUDE_DIRS}
 )
 
 add_service_files(
@@ -99,8 +102,7 @@ add_dependencies(${PROJECT_NAME}_internal
 )
 target_link_libraries(${PROJECT_NAME}_internal
   ${catkin_LIBRARIES}
-  ${PCL_LIBRARIES}
-  ${OCTOMAP_LIBRARIES}
+#  ${OCTOMAP_LIBRARIES}
 )
 
 ## simple octomap library (ros)
