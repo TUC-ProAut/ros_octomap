@@ -104,4 +104,13 @@ roslaunch octomap_pa octomap_pa.launch
  * Related packages:
  *  + https://github.com/TUC-ProAut/ros_parameter
  *
+ *
+ * @section doc_sec ROS Documentation
+ *
+ * ROS-Distribution    | Documentation
+ * --------------------|---------------
+ * Indigo              | <a href="http://docs.ros.org/indigo/api/octomap_pa/html/index.html">docs.ros.org</a>
+ * Jade (EOL May 2017) | -
+ * Kinetic             | <a href="http://docs.ros.org/kinetic/api/octomap_pa/html/index.html">docs.ros.org</a>
+ * Lunar               | <a href="http://docs.ros.org/lunar/api/octomap_pa/html/index.html">docs.ros.org</a>
  **/
