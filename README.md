@@ -104,3 +104,13 @@ Source code at github:
 
 Related packages:
 > https://github.com/TUC-ProAut/ros_parameter
+
+
+## ROS Build-Status and Documentation
+
+ROS-Distribution | Build-Status                                                                                                                                                        | Documentation
+-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------
+Indigo           | [![Build Status](http://build.ros.org/buildStatus/icon?job=Idev__octomap_pa__ubuntu_trusty_amd64)](http://build.ros.org/job/Idev__octomap_pa__ubuntu_trusty_amd64/) | [docs.ros.org](http://docs.ros.org/indigo/api/octomap_pa/html/index.html)
+Jade             | EOL May 2017                                                                                                                                                        | -
+Kinetic          | [![Build Status](http://build.ros.org/buildStatus/icon?job=Kdev__octomap_pa__ubuntu_xenial_amd64)](http://build.ros.org/job/Kdev__octomap_pa__ubuntu_xenial_amd64/) | [docs.ros.org](http://docs.ros.org/kinetic/api/octomap_pa/html/index.html)
+Lunar            | [![Build Status](http://build.ros.org/buildStatus/icon?job=Ldev__octomap_pa__ubuntu_xenial_amd64)](http://build.ros.org/job/Ldev__octomap_pa__ubuntu_xenial_amd64/) | [docs.ros.org](http://docs.ros.org/lunar/api/octomap_pa/html/index.html)
