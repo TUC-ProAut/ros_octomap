@@ -134,7 +134,6 @@ target_link_libraries(${PROJECT_NAME}_stamped_ros
 
 
 
-
 ## simple node
 add_executable(octree_pa_node
   src/octree_pa_node.cpp
@@ -144,6 +143,8 @@ add_dependencies(octree_pa_node
 
   ${PROJECT_NAME}_generate_messages_cpp
   ${PROJECT_NAME}_gencpp
+
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 target_link_libraries(octree_pa_node
   ${PROJECT_NAME}_ros
@@ -158,6 +159,8 @@ add_dependencies(octree_stamped_pa_node
 
   ${PROJECT_NAME}_generate_messages_cpp
   ${PROJECT_NAME}_gencpp
+
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 target_link_libraries(octree_stamped_pa_node
   ${PROJECT_NAME}_stamped_ros
@@ -172,6 +175,8 @@ add_dependencies(octree_stamped_native_node
 
   ${PROJECT_NAME}_generate_messages_cpp
   ${PROJECT_NAME}_gencpp
+
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 target_link_libraries(octree_stamped_native_node
   ${PROJECT_NAME}_stamped_ros
