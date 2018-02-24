@@ -112,6 +112,7 @@ add_library(${PROJECT_NAME}_ros
 )
 add_dependencies(${PROJECT_NAME}_ros
   ${PROJECT_NAME}_internal
+  ${PROJECT_NAME}_generate_messages_cpp
 )
 target_link_libraries(${PROJECT_NAME}_ros
   ${PROJECT_NAME}_internal
