@@ -2,8 +2,8 @@
 Changelog for package octomap_pa
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.2 (2018-02-25)
+------------------
 * add missing dependency on messages from this package
 * Contributors: Mikael Arguedas
 
