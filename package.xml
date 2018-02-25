@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
     <name>octomap_pa</name>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <description>ProAut octomap package</description>
     <maintainer email="wepet@hrz.tu-chemnitz.de">Peter Weissig</maintainer>
     <license>BSD</license>
