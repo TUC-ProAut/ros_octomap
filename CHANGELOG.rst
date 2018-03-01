@@ -2,8 +2,8 @@
 Changelog for package octomap_pa
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.3.3 (2018-03-01)
+------------------
 * Increased package version to avoid error on ros build farm
   different branches need different release version
   1.3.3 for master (== kinetic and lunar)
