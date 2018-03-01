@@ -104,6 +104,10 @@ roslaunch octomap_pa octomap_pa.launch
  * Related packages:
  *  + https://github.com/TUC-ProAut/ros_parameter
  *
+ * ROS packages:
+ *  + ros-kinetic-octomap-pa
+ *  + packages for indigo and lunar will be soon available
+ *
  *
  * @section doc_sec ROS Documentation
  *
