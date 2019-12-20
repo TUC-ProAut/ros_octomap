@@ -5,3 +5,6 @@
 
 # ignore documentation
 /doc/
+
+# ignore outdated files
+deprecated/
