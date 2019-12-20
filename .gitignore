@@ -1,17 +1,7 @@
-*~
+# ignore all hidden files
+.*
+# do not ignore .gitignore
+!.gitignore
 
-# Catkin custom files
-CATKIN_IGNORE
-
-# subversion
-.svn
-
-# older backup files
-deprecated/
-
-# eclipse stuff
-.project
-.cproject
-
-# Emacs
-.#*
+# ignore documentation
+/doc/
