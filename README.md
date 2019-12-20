@@ -2,10 +2,14 @@
 
 ## Introduction
 
-This package was designed to automatically remove outdated voxels from the [octomap](http://wiki.ros.org/octomap).
+This package was designed to automatically remove outdated voxels from
+the [octomap](http://wiki.ros.org/octomap).
 
-We described our motivation and concept on our [octomap-website](https://www.tu-chemnitz.de/etit/proaut/octo) - here you will also find two supportive videos.
-For further explanations, you may want to have a look at this [workshop abstract](http://nbn-resolving.de/urn:nbn:de:bsz:ch1-qucosa-226576).
+We described our motivation and concept on our
+[octomap-website](https://www.tu-chemnitz.de/etit/proaut/octo) - here you
+will also find two supportive videos.
+For further explanations, you may want to have a look at this
+[workshop abstract](http://nbn-resolving.de/urn:nbn:de:bsz:ch1-qucosa-226576).
 
 
 ## Nodes
@@ -16,7 +20,8 @@ rosrun octomap_pa octree_stamped_pa_node
 roslaunch octomap_pa octomap_stamped_pa.launch
 ```
 
-The native implementation of decay by the [original octomap package](https://octomap.github.io):
+The native implementation of decay by the
+[original octomap package](https://octomap.github.io):
 ```
 rosrun octomap_pa octree_stamped_native_node
 roslaunch octomap_pa octomap_stamped_native.launch
@@ -29,7 +34,7 @@ roslaunch octomap_pa octomap_pa.launch
 ```
 
 
-### Input and Output Topics:
+### Input and Output Topics
 
 Topic Name             | Type                                                                                     | Description
 -----------------------|------------------------------------------------------------------------------------------|---------------------------------
@@ -44,7 +49,7 @@ Topic Name             | Type                                                   
 All topics can be remapped using parameters (see below).
 
 
-### Services:
+### Services
 
 Service Name       | Type                                                                                                            | Description
 -------------------|-----------------------------------------------------------------------------------------------------------------|---------------------------------
@@ -54,7 +59,7 @@ Service Name       | Type                                                       
 "~/load"           | [octomap_pa/OctomapPaFileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaFileName.srv) | Loading a octomap from file - timestamps are ignored.
 
 
-### Parameters:
+### Parameters
 
 #### degrading of voxels
 Parameter Name               | Type                 | Description
@@ -99,22 +104,22 @@ It contains all parameters and their default value.
 
 ## Links
 
-Source code at github:
-> https://github.com/TUC-ProAut/ros_octomap
+### Source code at github
+https://github.com/TUC-ProAut/ros_octomap
 
-Related packages:
-> https://github.com/TUC-ProAut/ros_parameter
+### Related packages
+https://github.com/TUC-ProAut/ros_parameter
 
-ROS packages:
-> ros-kinetic-octomap-pa
-> packages for indigo and lunar will be soon available
+### ROS packages
+ros-kinetic-octomap-pa
 
 
 ## ROS Build-Status and Documentation
 
 ROS-Distribution | Build-Status                                                                                                                                                        | Documentation
 -----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------
-Indigo           | [![Build Status](http://build.ros.org/buildStatus/icon?job=Idev__octomap_pa__ubuntu_trusty_amd64)](http://build.ros.org/job/Idev__octomap_pa__ubuntu_trusty_amd64/) | [docs.ros.org](http://docs.ros.org/indigo/api/octomap_pa/html/index.html)
+Indigo           | EOL April 2019                                                                                                                                                      | [docs.ros.org/indigo](http://docs.ros.org/indigo/api/octomap_pa/html/index.html)
 Jade             | EOL May 2017                                                                                                                                                        | -
-Kinetic          | [![Build Status](http://build.ros.org/buildStatus/icon?job=Kdev__octomap_pa__ubuntu_xenial_amd64)](http://build.ros.org/job/Kdev__octomap_pa__ubuntu_xenial_amd64/) | [docs.ros.org](http://docs.ros.org/kinetic/api/octomap_pa/html/index.html)
-Lunar            | [![Build Status](http://build.ros.org/buildStatus/icon?job=Ldev__octomap_pa__ubuntu_xenial_amd64)](http://build.ros.org/job/Ldev__octomap_pa__ubuntu_xenial_amd64/) | [docs.ros.org](http://docs.ros.org/lunar/api/octomap_pa/html/index.html)
+Kinetic          | [![Build Status](http://build.ros.org/buildStatus/icon?job=Kdev__octomap_pa__ubuntu_xenial_amd64)](http://build.ros.org/job/Kdev__octomap_pa__ubuntu_xenial_amd64/) | [docs.ros.org/kinetic](http://docs.ros.org/kinetic/api/octomap_pa/html/index.html)
+Lunar            | EOL May 2019                                                                                                                                                        | [docs.ros.org/lunar](http://docs.ros.org/lunar/api/octomap_pa/html/index.html)
+Melodic          | upcoming                                                                                                                                                            | [docs.ros.org/melodic](http://docs.ros.org/melodic/api/octomap_pa/html/index.html)
