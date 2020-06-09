@@ -17,7 +17,7 @@
 #                                                                             #
 # New BSD License                                                             #
 #                                                                             #
-# Copyright (c) 2015-2018, Peter Weissig, Technische Universität Chemnitz     #
+# Copyright (c) 2015-2020, Peter Weissig, Technische Universität Chemnitz     #
 # All rights reserved.                                                        #
 #                                                                             #
 # Redistribution and use in source and binary forms, with or without          #
@@ -93,7 +93,7 @@ elif [ "$1" = "${NAME_ARGUMENT_SCRIPT}" ]; then
     echo "Running this script with argument \"$1\"."
     echo "Therefore all dependend sources of"
     echo "  \"${NAME_GIT_THIS}\""
-    echo "will be checked out recursivly."
+    echo "will be checked out recursively."
     echo ""
 
     SRC_DIR_DEPENDENCY="$(pwd)"
