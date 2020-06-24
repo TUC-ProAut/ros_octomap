@@ -99,17 +99,17 @@ class cOctreeBasePaRos : public OCTREE {
 
     //! function for filtering and adding a pointcloud
     //! (call updateTime() before)
-    bool addCloud(const sensor_msgs::PointCloud2ConstPtr &cloud,
+    bool addCloud(const sensor_msgs::PointCloud2 &cloud,
       const cAddCloudParameter &params,
       const tf::Transform transform = tf::Transform::getIdentity());
     //! function for filtering and adding a pointcloud (old format)
     //! (call updateTime() before)
-    bool addCloud(const sensor_msgs::PointCloudConstPtr &cloud,
+    bool addCloud(const sensor_msgs::PointCloud &cloud,
       const cAddCloudParameter &params,
       const tf::Transform transform = tf::Transform::getIdentity());
     //! function for filtering and adding a pointcloud (laserscan)
     //! (call updateTime() before)
-    bool addCloud(const sensor_msgs::LaserScanConstPtr &cloud,
+    bool addCloud(const sensor_msgs::LaserScan &cloud,
       const cAddCloudParameter &params,
       const tf::Transform transform = tf::Transform::getIdentity());
 
@@ -126,17 +126,15 @@ class cOctreeBasePaRos : public OCTREE {
       const int tree_depth = 0, const bool expand = false) const;
 
     //! function for updating all timestamps (Insertion & Output)
-    //! returns false if an time jump backwards is detected
+    //! returns false if a time jump backwards is detected
     //! this might be used for resetting tf_listener
     bool updateTime(const ros::Time &time);
     //! function for returning the time the octomap was last updated
-    //! (instead of this function use updateTime() )
     virtual ros::Time getLastInsertionTime(void) const;
     //! function for setting the time the octomap was last updated
     //! (instead of this function use updateTime() )
     virtual void setLastInsertionTime(const ros::Time &time);
     //! function for returning the time of output messages
-    //! (instead of this function use updateTime() )
     ros::Time getOutputTime(void) const;
     //! function for setting the time of output messages
     //! (instead of this function use updateTime() )

@@ -95,12 +95,12 @@ template <typename OCTREE>
 //**************************[addCloud]*****************************************
 template <typename OCTREE>
   bool cOctreeBasePaRos<OCTREE>::addCloud(
-  const sensor_msgs::PointCloud2ConstPtr &cloud,
+  const sensor_msgs::PointCloud2 &cloud,
   const cAddCloudParameter &params,
   const tf::Transform transform) {
 
     PclPointCloudPtr cloud_pcl(new PclPointCloud);
-    pcl::fromROSMsg(*cloud, *cloud_pcl);
+    pcl::fromROSMsg(cloud, *cloud_pcl);
 
     return addCloud(cloud_pcl, params, transform);
 }
@@ -108,12 +108,12 @@ template <typename OCTREE>
 //**************************[addCloud]*****************************************
 template <typename OCTREE>
   bool cOctreeBasePaRos<OCTREE>::addCloud(
-  const sensor_msgs::PointCloudConstPtr &cloud,
+  const sensor_msgs::PointCloud &cloud,
   const cAddCloudParameter &params,
   const tf::Transform transform) {
 
-    sensor_msgs::PointCloud2Ptr cloud2(new sensor_msgs::PointCloud2);
-    sensor_msgs::convertPointCloudToPointCloud2(*cloud, *cloud2);
+    sensor_msgs::PointCloud2 cloud2;
+    sensor_msgs::convertPointCloudToPointCloud2(cloud, cloud2);
 
     return addCloud(cloud2, params, transform);
 }
@@ -121,14 +121,14 @@ template <typename OCTREE>
 //**************************[addCloud]*****************************************
 template <typename OCTREE>
   bool cOctreeBasePaRos<OCTREE>::addCloud(
-  const sensor_msgs::LaserScanConstPtr &cloud,
+  const sensor_msgs::LaserScan &cloud,
   const cAddCloudParameter &params,
   const tf::Transform transform) {
 
     laser_geometry::LaserProjection projector;
 
-    sensor_msgs::PointCloud2Ptr cloud2 (new sensor_msgs::PointCloud2);
-    projector.projectLaser(*cloud, *cloud2, -1,
+    sensor_msgs::PointCloud2 cloud2;
+    projector.projectLaser(cloud, cloud2, -1,
       laser_geometry::channel_option::None);
 
     return addCloud(cloud2, params, transform);

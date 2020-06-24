@@ -214,7 +214,7 @@ void cOctreePaNode::addPointcloudCallbackSub(
         return;
     }
 
-    if (addCloud(msg, addparams_, transform)) {
+    if (addCloud(*msg, addparams_, transform)) {
         count_cloud_++;
         publishOctomap();
     }
@@ -241,7 +241,7 @@ void cOctreePaNode::addPointcloudOldCallbackSub(
         return;
     }
 
-    if (addCloud(msg, addparams_, transform)) {
+    if (addCloud(*msg, addparams_, transform)) {
         count_cloud_old_++;
         publishOctomap();
     }
@@ -269,7 +269,7 @@ void cOctreePaNode::addLaserCallbackSub(
     }
 
     updateTime(msg->header.stamp);
-    if (addCloud(msg, addparams_, transform)) {
+    if (addCloud(*msg, addparams_, transform)) {
         count_laser_++;
         publishOctomap();
     }
