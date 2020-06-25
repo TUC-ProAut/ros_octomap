@@ -11,6 +11,7 @@
 
     <depend>std_msgs</depend>
     <depend>sensor_msgs</depend>
+    <depend>geometry_msgs</depend>
 
     <build_depend>message_generation</build_depend>
     <build_export_depend>message_runtime</build_export_depend>
@@ -19,5 +20,6 @@
 
     <doc_depend>doxygen</doc_depend>
     <doc_depend>sensor_msgs</doc_depend>
+    <doc_depend>geometry_msgs</doc_depend>
 
 </package>
