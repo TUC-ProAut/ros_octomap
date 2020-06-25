@@ -1,9 +1,10 @@
 # ProAut OctoMap
 
-This repository contains two packages:
+This repository contains three packages:
 
 * [main package](octomap_pa/)
 * [messages package](octomap_pa_msgs/)
+* [matlab wrapper](octomap_pa_matlab/)
 
 ## octomap_pa package
 
@@ -20,6 +21,9 @@ For further explanations, you may want to have a look at this
 The [messages package](octomap_pa_msgs/) only contains the octomap messages,
 which you may need for communication with one of our octomap nodes.
 
+The [matlab wrapper](octomap_pa_matlab/) includes an easy-to-use matlab class
+and the ros custom messages for matlab.
+
 ## Links
 
 ### Source code at github
@@ -29,6 +33,8 @@ https://github.com/TUC-ProAut/ros_octomap
 ros-kinetic-octomap-pa
 
 ros-kinetic-octomap-pa-msgs (upcoming)
+
+ros-kinetic-octomap-pa-matlab (upcoming)
 
 
 ## ROS Build-Status and Documentation

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>octomap_pa_matlab</name>
+    <version>1.0.0</version>
+    <description>
+        This package contains the source code and the messages for the matlab
+        wrapper.
+    </description>
+
+
+    <maintainer email="wepet@hrz.tu-chemnitz.de">Peter Weissig</maintainer>
+
+    <license>BSD</license>
+    <author email="wepet@hrz.tu-chemnitz.de">Peter Weissig</author>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <depend>octomap_pa_msgs</depend>
+
+    <doc_depend>doxygen</doc_depend>
+    <doc_depend>octomap_pa_msgs</doc_depend>
+
+</package>
