@@ -1,0 +1,9 @@
+# using this service, the transform between the pointcloud and the octomap
+# needs to be passed (the tf tree of ros will be ignored!)
+
+# new pointcloud to be inserted
+sensor_msgs/PointCloud2 cloud
+# transform between the cloud and the octomap
+geometry_msgs/Transform transform
+---
+bool ok

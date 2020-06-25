@@ -1,0 +1,6 @@
+## see also GetConfig
+
+
+octomap_pa_msgs/ConfigBase config
+---
+bool ok

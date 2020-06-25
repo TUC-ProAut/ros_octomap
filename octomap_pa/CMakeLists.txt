@@ -15,11 +15,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
 
   std_msgs
-  geometry_msgs
   sensor_msgs
-  nav_msgs
   std_srvs
-  message_generation
+  message_generation # deprecated, only for backwards compatibility
 
   tf
   laser_geometry
@@ -32,6 +30,7 @@ find_package(catkin REQUIRED COMPONENTS
   octomap_msgs
 
   parameter_pa
+  octomap_pa_msgs
 )
 
 include_directories(
@@ -40,19 +39,19 @@ include_directories(
 #  ${OCTOMAP_INCLUDE_DIRS}
 )
 
+# this part is deprecated, but exists for backwards compatibility
 add_service_files(
   FILES
     OctomapPaFileName.srv
     OctomapPaGetSize.srv
 )
+# this part is deprecated, but exists for backwards compatibility
 generate_messages(
   DEPENDENCIES
     std_msgs
-    geometry_msgs
     sensor_msgs
-    nav_msgs
-    std_srvs
 )
+
 
 catkin_package(
   DEPENDS
@@ -64,11 +63,9 @@ catkin_package(
     roscpp
 
     std_msgs
-    geometry_msgs
     sensor_msgs
-    nav_msgs
     std_srvs
-    message_runtime
+    message_runtime # deprecated, only for backwards compatibility
 
     tf
     laser_geometry
@@ -80,6 +77,7 @@ catkin_package(
     octomap_msgs
 
     parameter_pa
+    octomap_pa_msgs
 
   LIBRARIES
     ${PROJECT_NAME}_internal

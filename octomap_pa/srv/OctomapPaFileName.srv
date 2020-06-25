@@ -1,3 +1,8 @@
+# these files are deprecated!
+# they only exist for backward compatibility
+# please use octomap_pa_msgs/FileName
+
+
 string filename
 ---
 bool ok

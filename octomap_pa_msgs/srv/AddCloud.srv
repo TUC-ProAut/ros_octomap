@@ -1,0 +1,7 @@
+# using this service, the transform between the pointcloud and the octomap
+# will be loaded from the tf tree of ros (using a tf listener)
+
+# new pointcloud to be inserted
+sensor_msgs/PointCloud2 cloud
+---
+bool ok

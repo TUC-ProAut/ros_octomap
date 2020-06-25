@@ -1,6 +1,4 @@
-# these files are deprecated!
-# they only exist for backward compatibility
-# please use octomap_pa_msgs/GetSize
+## this file is similar to nearfield_map/NearfieldMapGetSize
 
 
 ---

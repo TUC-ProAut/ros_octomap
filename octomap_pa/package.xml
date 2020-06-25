@@ -13,8 +13,6 @@
 
     <depend>std_msgs</depend>
     <depend>sensor_msgs</depend>
-    <depend>geometry_msgs</depend>
-    <depend>nav_msgs</depend>
     <depend>std_srvs</depend>
 
     <depend>tf</depend>
@@ -27,12 +25,14 @@
     <depend>octomap_msgs</depend>
 
     <depend>parameter_pa</depend>
+    <depend>octomap_pa_msgs</depend>
 
 
     <build_depend>libpcl-all-dev</build_depend>
     <build_export_depend>libpcl-all</build_export_depend>
     <exec_depend>libpcl-all</exec_depend>
 
+    <!-- deprecated, only for backwards compatibility -->
     <build_depend>message_generation</build_depend>
     <build_export_depend>message_runtime</build_export_depend>
     <exec_depend>message_runtime</exec_depend>
@@ -40,5 +40,6 @@
 
     <doc_depend>doxygen</doc_depend>
     <doc_depend>parameter_pa</doc_depend>
+    <doc_depend>octomap_pa_msgs</doc_depend>
 
 </package>

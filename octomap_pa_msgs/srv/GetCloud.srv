@@ -1,0 +1,10 @@
+# set type of returned pointcloud
+#   true : occupied voxels (default)
+#   false: free     voxels
+bool occupied
+---
+# current octomap as pointcloud (after applying threshold)
+sensor_msgs/PointCloud2 cloud
+
+# current setting of octomap node
+octomap_pa_msgs/Config config
