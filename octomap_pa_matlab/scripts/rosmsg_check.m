@@ -50,7 +50,7 @@ function [out] = rosmsg_check(name_part)
 % returns or prints all ros messages containing <name_part>
 
     if (nargin < 1)
-        name_part = 'octomap';
+        name_part = 'octomap_pa';
     end
 
     full_list = rosmsg("list");
