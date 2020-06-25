@@ -3,7 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/include/",
+                "${workspaceFolder}/octomap_pa/include/",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/../../devel/include",
                 "/opt/ros/kinetic/include/"
