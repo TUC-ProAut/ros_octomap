@@ -3,7 +3,7 @@
 ## Introduction
 
 This package was designed to automatically remove outdated voxels from
-the [octomap](http://wiki.ros.org/octomap).
+the [original octomap](http://wiki.ros.org/octomap).
 
 We described our motivation and concept on our
 [octomap-website](https://www.tu-chemnitz.de/etit/proaut/octo) - here you
@@ -51,12 +51,12 @@ All topics can be remapped using parameters (see below).
 
 ### Services
 
-Service Name       | Type                                                                                                            | Description
--------------------|-----------------------------------------------------------------------------------------------------------------|---------------------------------
-"~/clear"          | std_srvs/Empty                                                                                                  | Deletes internal octomap.
-"~/getsize"        | [octomap_pa/OctomapPaGetSize](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaGetSize.srv)   | Returning number of nodes, total size in bytes and number of inserted measurments.
-"~/save"           | [octomap_pa/OctomapPaFileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaFileName.srv) | Storing the current octomap as file - timestamps are not saved.
-"~/load"           | [octomap_pa/OctomapPaFileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/srv/OctomapPaFileName.srv) | Loading a octomap from file - timestamps are ignored.
+Service Name       | Type                                                                                                                 | Description
+-------------------|----------------------------------------------------------------------------------------------------------------------|---------------------------------
+"~/clear"          | std_srvs/Empty                                                                                                       | Deletes internal octomap.
+"~/getsize"        | [octomap_pa_msgs/GetSize](https://github.com/TUC-ProAut/ros_octomap/blob/master/octomap_pa_msgs/srv/OctomapPaGetSize.srv)   | Returning number of nodes, total size in bytes and number of inserted measurments.
+"~/save"           | [octomap_pa_msgs/FileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/octomap_pa_msgs/srv/OctomapPaFileName.srv) | Storing the current octomap as file - timestamps are not saved.
+"~/load"           | [octomap_pa_msgs/FileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/octomap_pa_msgs/srv/OctomapPaFileName.srv) | Loading a octomap from file - timestamps are ignored.
 
 
 ### Parameters
@@ -98,7 +98,7 @@ Parameter Name               | Type                 | Description
 "~/topic_out_cloud_occupied" | string               | Name of output topic for occupied voxels.
 
 
-See also [this config file](https://github.com/TUC-ProAut/ros_octomap/blob/master/config/parameter.yaml).
+See also [this config file](https://github.com/TUC-ProAut/ros_octomap/blob/master/octomap_pa/config/parameter.yaml).
 It contains all parameters and their default value.
 
 
