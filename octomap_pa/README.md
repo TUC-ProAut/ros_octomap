@@ -54,6 +54,7 @@ All topics can be remapped using parameters (see below).
 Service Name       | Type                                                                                                                 | Description
 -------------------|----------------------------------------------------------------------------------------------------------------------|---------------------------------
 "~/clear"          | std_srvs/Empty                                                                                                       | Deletes internal octomap.
+"~/reset"          | [octomap_pa_msgs/Reset](https://github.com/TUC-ProAut/ros_octomap/blob/master/octomap_pa_msgs/srv/OctomapPaGetSize.srv)  | Changes the resolution and the frame after clearing the internal octomap.
 "~/getsize"        | [octomap_pa_msgs/GetSize](https://github.com/TUC-ProAut/ros_octomap/blob/master/octomap_pa_msgs/srv/OctomapPaGetSize.srv)   | Returning number of nodes, total size in bytes and number of inserted measurments.
 "~/save"           | [octomap_pa_msgs/FileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/octomap_pa_msgs/srv/OctomapPaFileName.srv) | Storing the current octomap as file - timestamps are not saved.
 "~/load"           | [octomap_pa_msgs/FileName](https://github.com/TUC-ProAut/ros_octomap/blob/master/octomap_pa_msgs/srv/OctomapPaFileName.srv) | Loading a octomap from file - timestamps are ignored.
