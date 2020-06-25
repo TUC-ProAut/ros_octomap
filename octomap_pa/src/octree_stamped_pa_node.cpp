@@ -55,10 +55,12 @@
 // standard headers
 #include <string>
 
+const std::string cOctreeStampedPaNode::nodename_ = "octree_stamped_pa_node";
+
 //**************************[main]*********************************************
 int main(int argc, char **argv) {
 
-    ros::init(argc, argv, "octree_stamped_pa_node");
+    ros::init(argc, argv, cOctreeStampedPaNode::nodename_);
     cOctreeStampedPaNode octomap;
 
     ros::spin();
@@ -67,114 +69,16 @@ int main(int argc, char **argv) {
 }
 
 //**************************[cOctreeStampedPaNode]*****************************
-cOctreeStampedPaNode::cOctreeStampedPaNode() : cOctreeStampedPaRos(0.1),
-  tf_listener_(ros::Duration(20), true) {
+cOctreeStampedPaNode::cOctreeStampedPaNode() :
+  TypeBase(nodename_) {
 
     cParameterPaRos paramloader;
 
-    paramloader.load("~/output_frame", rosparams_base_.output_frame_);
-
-    // octomap parameter
-    double temp;
-    temp = 0.1 ;
-    paramloader.load("~/map_resolution"    , temp); setResolution      (temp);
-    temp = 0.5 ;
-    paramloader.load("~/map_prob_threshold", temp); setOccupancyThres  (temp);
-    temp = 0.12;
-    paramloader.load("~/map_clamp_min"     , temp); setClampingThresMin(temp);
-    temp = 0.97;
-    paramloader.load("~/map_clamp_max"     , temp); setClampingThresMax(temp);
-
-    // pointcloud insertion parameter
-    paramloader.load("~/map_prob_hit"      , addparams_.map_prob_hit_      );
-    paramloader.load("~/map_prob_miss"     , addparams_.map_prob_miss_     );
-    paramloader.load("~/pcd_voxel_active"  , addparams_.pcd_voxel_active_  );
-    paramloader.load("~/pcd_voxel_explicit", addparams_.pcd_voxel_explicit_);
-    paramloader.load("~/pcd_voxel_explicit_relative_resolution",
-      addparams_.pcd_voxel_explicit_relative_resolution_);
-    paramloader.load("~/pcd_explicit_transform",
-      addparams_.pcd_explicit_transform_);
-
     // degrading parameter
-    paramloader.load("~/degrading_time"          , rosparams_.degrading_time_);
-    paramloader.load("~/auto_degrading"          , rosparams_.auto_degrading_);
+    paramloader.load("~/degrading_time", rosparams_.degrading_time_);
+    paramloader.load("~/auto_degrading", rosparams_.auto_degrading_);
     paramloader.load("~/auto_degrading_intervall",
       rosparams_.auto_degrading_intervall_);
-
-    // topics in
-    paramloader.loadTopic("~/topic_in_cloud"    ,
-      nodeparams_.topic_in_cloud_    );
-    paramloader.loadTopic("~/topic_in_cloud_old",
-      nodeparams_.topic_in_cloud_old_);
-    paramloader.loadTopic("~/topic_in_laser"    ,
-      nodeparams_.topic_in_laser_    );
-
-    // topics out
-    paramloader.loadTopic("~/topic_out_octomap"       ,
-      nodeparams_.topic_out_octomap_);
-    paramloader.loadTopic("~/topic_out_octomap_full"  ,
-      nodeparams_.topic_out_octomap_full_);
-    paramloader.loadTopic("~/topic_out_cloud_free"    ,
-      nodeparams_.topic_out_cloud_free_);
-    paramloader.loadTopic("~/topic_out_cloud_occupied",
-      nodeparams_.topic_out_cloud_occupied_);
-
-    // Subscriber for pointclouds
-    if (nodeparams_.topic_in_cloud_ != "") {
-        sub_cloud_ = nh_.subscribe<sensor_msgs::PointCloud2>(
-          nodeparams_.topic_in_cloud_, 10,
-          &cOctreeStampedPaNode::addPointcloudCallbackSub, this);
-    }
-
-    // Subscriber for pointclouds (old format)
-    if (nodeparams_.topic_in_cloud_old_ != "") {
-        sub_cloud_old_ = nh_.subscribe<sensor_msgs::PointCloud>(
-          nodeparams_.topic_in_cloud_old_, 10,
-          &cOctreeStampedPaNode::addPointcloudOldCallbackSub, this);
-    }
-    // Subscriber for laserscans
-    if (nodeparams_.topic_in_laser_ != "") {
-        sub_laser_ = nh_.subscribe<sensor_msgs::LaserScan>(
-          nodeparams_.topic_in_laser_, 10,
-          &cOctreeStampedPaNode::addLaserCallbackSub, this);
-    }
-
-
-    // puplisher for the octomap (binary data)
-    pub_octomap_        = nh_.advertise<octomap_msgs::Octomap>(
-      nodeparams_.topic_out_octomap_, 10, true);
-    // puplisher for the octomap (full data)
-    pub_octomap_full_   = nh_.advertise<octomap_msgs::Octomap>(
-      nodeparams_.topic_out_octomap_full_, 10, true);
-
-    // puplisher for free voxels as pointcloud
-    pub_cloud_free_     = nh_.advertise<sensor_msgs::PointCloud2>(
-      nodeparams_.topic_out_cloud_free_, 10, true);
-    // puplisher for occupied voxels as pointcloud
-    pub_cloud_occupied_ = nh_.advertise<sensor_msgs::PointCloud2>(
-      nodeparams_.topic_out_cloud_occupied_, 10, true);
-
-
-    std::string str_service("~/");
-    str_service = paramloader.resolveRessourcename(str_service);
-    // service for clearing the octomap
-    srv_clear_ = nh_.advertiseService(str_service + "clear",
-      &cOctreeStampedPaNode::clearCallbackSrv, this);
-    // service for receiving the size of the octomap
-    srv_getsize_ = nh_.advertiseService(str_service + "getsize",
-      &cOctreeStampedPaNode::getSizeCallbackSrv, this);
-    // service for saving the octomap
-    srv_save_ = nh_.advertiseService(str_service + "save",
-      &cOctreeStampedPaNode::saveCallbackSrv, this);
-    // service for loading a octomap
-    srv_load_ = nh_.advertiseService(str_service + "load",
-      &cOctreeStampedPaNode::loadCallbackSrv, this);
-
-
-    // count number of inserted pointclouds
-    count_cloud_     = 0;
-    count_cloud_old_ = 0;
-    count_laser_     = 0;
 }
 
 //**************************[~cOctreeStampedPaNode]****************************
@@ -182,176 +86,27 @@ cOctreeStampedPaNode::~cOctreeStampedPaNode() {
 
 }
 
-//**************************[publishOctomap]***********************************
-void cOctreeStampedPaNode::publishOctomap() {
+//**************************[getConfig]****************************************
+octomap_pa_msgs::Config cOctreeStampedPaNode::getConfig() {
 
-    if (pub_octomap_.getNumSubscribers() > 0) {
-        pub_octomap_.publish(getOctomap());
-    }
-    if (pub_octomap_full_.getNumSubscribers() > 0) {
-        pub_octomap_.publish(getOctomapFull());
-    }
+    // init variables
+    octomap_pa_msgs::Config result;
 
-    if (pub_cloud_occupied_.getNumSubscribers() > 0) {
-        pub_cloud_occupied_.publish(getOctomapPcd());
-    }
-    if (pub_cloud_free_.getNumSubscribers() > 0) {
-        pub_cloud_free_.publish(getOctomapPcdFree());
-    }
+    // call base class function
+    result = TypeBase::getConfig();
+
+    // config for degrading (not used by default)
+    result.degrading.degrading_time           = rosparams_.degrading_time_;
+    result.degrading.auto_degrading           = rosparams_.degrading_time_;
+    result.degrading.auto_degrading_intervall =
+      rosparams_.auto_degrading_intervall_;
+
+    // return result
+    return result;
 }
 
-//**************************[addPointcloudCallbackSub]*************************
-void cOctreeStampedPaNode::addPointcloudCallbackSub(
-  const sensor_msgs::PointCloud2ConstPtr &msg) {
+//**************************[internal_node_update]*****************************
+void cOctreeStampedPaNode::internal_node_update() {
 
-    if (!updateTime(msg->header.stamp)) {
-        tf_listener_.clear();
-        return;
-    }
-
-    tf::StampedTransform transform;
-
-    try {
-        tf_listener_.waitForTransform(rosparams_base_.output_frame_,
-          msg->header.frame_id, msg->header.stamp, ros::Duration(0.2));
-        tf_listener_.lookupTransform(rosparams_base_.output_frame_,
-          msg->header.frame_id, msg->header.stamp, transform);
-    } catch (tf::TransformException &ex){
-        ROS_WARN("%s",ex.what());
-        return;
-    }
-
-    if (addCloud(*msg, addparams_, transform)) {
-        count_cloud_++;
-        checkDegrading();
-        publishOctomap();
-    }
-}
-
-//**************************[addPointcloudCallbackSub]*************************
-void cOctreeStampedPaNode::addPointcloudOldCallbackSub(
-  const sensor_msgs::PointCloudConstPtr &msg) {
-
-    if (!updateTime(msg->header.stamp)) {
-        tf_listener_.clear();
-        return;
-    }
-
-    tf::StampedTransform transform;
-
-    try {
-        tf_listener_.waitForTransform(rosparams_base_.output_frame_,
-          msg->header.frame_id, msg->header.stamp, ros::Duration(0.2));
-        tf_listener_.lookupTransform(rosparams_base_.output_frame_,
-          msg->header.frame_id, msg->header.stamp, transform);
-    } catch (tf::TransformException &ex){
-        ROS_WARN("%s",ex.what());
-        return;
-    }
-
-    if (addCloud(*msg, addparams_, transform)) {
-        count_cloud_old_++;
-        checkDegrading();
-        publishOctomap();
-    }
-}
-
-//**************************[addLaserCallbackSub]******************************
-void cOctreeStampedPaNode::addLaserCallbackSub(
-  const sensor_msgs::LaserScanConstPtr &msg) {
-
-    if (!updateTime(msg->header.stamp)) {
-        tf_listener_.clear();
-        return;
-    }
-
-    tf::StampedTransform transform;
-
-    try {
-        tf_listener_.waitForTransform(rosparams_base_.output_frame_,
-          msg->header.frame_id, msg->header.stamp, ros::Duration(0.2));
-        tf_listener_.lookupTransform(rosparams_base_.output_frame_,
-          msg->header.frame_id, msg->header.stamp, transform);
-    } catch (tf::TransformException &ex){
-        ROS_WARN("%s",ex.what());
-        return;
-    }
-
-    updateTime(msg->header.stamp);
-    if (addCloud(*msg, addparams_, transform)) {
-        count_laser_++;
-        checkDegrading();
-        publishOctomap();
-    }
-}
-
-
-//**************************[clearCallbackSrv]*********************************
-bool cOctreeStampedPaNode::clearCallbackSrv(std_srvs::Empty::Request  &req,
-  std_srvs::Empty::Response &res) {
-
-    ROS_INFO("cOctreeStampedPaNode::clear()");
-
-    count_cloud_     = 0;
-    count_cloud_old_ = 0;
-    count_laser_     = 0;
-
-    clear();
-    tf_listener_.clear();
-
-    return true;
-}
-
-//**************************[getSizeCallbackSrv]*******************************
-bool cOctreeStampedPaNode::getSizeCallbackSrv (
-  octomap_pa::OctomapPaGetSize::Request  &req,
-  octomap_pa::OctomapPaGetSize::Response &res) {
-
-    ROS_INFO("cOctreeStampedPaNode::getsize()");
-
-    res.size = size();
-    res.memoryusage = (int64_t) memoryUsage();
-
-    res.count_cloud     = count_cloud_    ;
-    res.count_cloud_old = count_cloud_old_;
-    res.count_laser     = count_laser_    ;
-
-    return true;
-}
-
-//**************************[saveCallbackSrv]**********************************
-bool cOctreeStampedPaNode::saveCallbackSrv(
-  octomap_pa::OctomapPaFileName::Request  &req,
-  octomap_pa::OctomapPaFileName::Response &res) {
-
-    ROS_INFO_STREAM("cOctreeStampedPaNode::save(" << req.filename << ")");
-
-    std::string filename;
-    filename = req.filename;
-    cParameterPaRos par;
-    par.replaceFindpack(filename);
-
-    //res.ok = writeBinary(filename);
-    res.ok = this->write(filename);
-
-    return res.ok;
-}
-
-//**************************[loadCallbackSrv]**********************************
-bool cOctreeStampedPaNode::loadCallbackSrv(
-  octomap_pa::OctomapPaFileName::Request  &req,
-  octomap_pa::OctomapPaFileName::Response &res) {
-
-    ROS_INFO_STREAM("cOctreeStampedPaNode::load(" << req.filename << ")");
-
-    std::string filename;
-    filename = req.filename;
-    cParameterPaRos par;
-    par.replaceFindpack(filename);
-
-    // res.ok = readBinary(filename);
-    res.ok = readFull(filename);
-
-    if (res.ok) { publishOctomap(); }
-    return res.ok;
+    checkDegrading();
 }

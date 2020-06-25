@@ -51,115 +51,30 @@
 
 // local headers
 #include "octomap_pa/octree_stamped_pa_ros.h"
-#include "octomap_pa/octree_base_pa_node_parameter.h"
-#include "octomap_pa/addcloud_parameter.h"
-
-#include "octomap_pa/OctomapPaFileName.h"
-#include "octomap_pa/OctomapPaGetSize.h"
-
-// ros headers
-#include <ros/ros.h>
-
-#include <geometry_msgs/Point.h>
-#include <sensor_msgs/PointCloud.h>
-#include <sensor_msgs/PointCloud2.h>
-#include <nav_msgs/Path.h>
-#include <std_srvs/Empty.h>
-
-#include <tf/transform_listener.h>
-
-#include <octomap_msgs/Octomap.h>
-
-#include <parameter_pa/parameter_pa_ros.h>
-
-// additional libraries
-#include <pcl/point_types.h>
-
-#include <octomap/octomap.h>
+#include "octomap_pa/octree_base_pa_node.h"
 
 // standard headers
 #include <string>
-#include <vector>
 
 //**************************[cOctreeStampedPaNode]*****************************
-class cOctreeStampedPaNode : public cOctreeStampedPaRos {
+class cOctreeStampedPaNode : public cOctreeBasePaNode<cOctreeStampedPaRos> {
   public:
+    typedef cOctreeBasePaNode<cOctreeStampedPaRos> TypeBase;
+
     //! default constructor
     cOctreeStampedPaNode();
 
     //! default destructor
     ~cOctreeStampedPaNode();
 
-    //! function for publishing the octomap
-    void publishOctomap(void);
+    //! function for retrieving all current configs
+    virtual octomap_pa_msgs::Config getConfig(void);
+
+    //! official node name
+    const static std::string nodename_;
 
   protected:
-
-    //! parameters
-    cOctreeBasePaNodeParameter nodeparams_;
-    cAddCloudParameter         addparams_ ;
-
-    //! number of inserted pointclouds
-    int count_cloud_;
-    //! number of inserted pointclouds (old format)
-    int count_cloud_old_;
-    //! number of inserted laser scans
-    int count_laser_;
-
-    //! node handler for topic subscription and advertising
-    ros::NodeHandle nh_;
-
-    //! transformation of different frames
-    tf::TransformListener tf_listener_;
-
-
-    //! subscriber for a pointcloud
-    ros::Subscriber sub_cloud_;
-    //! callback function for receiving a pointcloud
-    void addPointcloudCallbackSub(
-        const sensor_msgs::PointCloud2ConstPtr &msg);
-
-    //! subscriber for a pointcloud (old format)
-    ros::Subscriber sub_cloud_old_;
-    //! callback function for receiving a pointcloud (old format)
-    void addPointcloudOldCallbackSub(
-        const sensor_msgs::PointCloudConstPtr &msg);
-
-    //! subscriber for a laserscan
-    ros::Subscriber sub_laser_;
-    //! callback function for receiving a laserscan
-    void addLaserCallbackSub(const sensor_msgs::LaserScanConstPtr &msg);
-
-    //! puplisher for the octomap (binary data)
-    ros::Publisher pub_octomap_;
-    //! puplisher for the octomap (full data)
-    ros::Publisher pub_octomap_full_;
-    //! puplisher for free voxels as pointcloud
-    ros::Publisher pub_cloud_free_;
-    //! puplisher for occupied voxels as pointcloud
-    ros::Publisher pub_cloud_occupied_;
-
-
-    //! service for clearing the octomap
-    ros::ServiceServer srv_clear_;
-    bool clearCallbackSrv(std_srvs::Empty::Request  &req,
-      std_srvs::Empty::Response &res);
-
-    //! service for receiving the size of the octomap
-    ros::ServiceServer srv_getsize_;
-    bool getSizeCallbackSrv(
-      octomap_pa::OctomapPaGetSize::Request  &req,
-      octomap_pa::OctomapPaGetSize::Response &res);
-    //! service for saving the octomap
-    ros::ServiceServer srv_save_;
-    bool saveCallbackSrv(
-      octomap_pa::OctomapPaFileName::Request  &req,
-      octomap_pa::OctomapPaFileName::Response &res);
-    //! service for loading a octomap
-    ros::ServiceServer srv_load_;
-    bool loadCallbackSrv(
-      octomap_pa::OctomapPaFileName::Request  &req,
-      octomap_pa::OctomapPaFileName::Response &res);
+    virtual void internal_node_update(void);
 };
 
 #endif // __OCTREE_STAMPED_PA_NODE_H
