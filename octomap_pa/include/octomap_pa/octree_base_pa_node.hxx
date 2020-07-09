@@ -178,6 +178,8 @@ template <typename BASECLASS>
     // service for adding a new pointcloud to the octomap
     srv_addcloud_ = nh_.advertiseService(str_service + "addcloud",
       &cOctreeBasePaNode<BASECLASS>::addCloudCallbackSrv, this);
+    srv_addcloudtf_ = nh_.advertiseService(str_service + "addcloudtf",
+      &cOctreeBasePaNode<BASECLASS>::addCloudTfCallbackSrv, this);
     // service for receiving the current octomap as pointcloud
     srv_getcloud_ = nh_.advertiseService(str_service + "getcloud",
       &cOctreeBasePaNode<BASECLASS>::getCloudCallbackSrv, this);
