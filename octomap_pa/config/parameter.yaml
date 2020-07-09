@@ -4,7 +4,7 @@
 #degrading_time: 60.0 # seconds
 ## turns on automatic degrading
 #auto_degrading: true
-## intervall for automatic degrading
+## intervall for automatic degrading (only based on header timestamps)
 #auto_degrading_intervall: 2.0 # seconds
 
 
