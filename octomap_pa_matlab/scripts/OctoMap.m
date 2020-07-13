@@ -77,7 +77,7 @@ classdef OctoMap < handle
         % probalitity that a positive measurement relates to a occupied voxel
         map_prob_hit (1,1) double ...
           {mustBeNonnegative, mustBeLessThan(map_prob_hit ,1)} = 0.7;
-        
+
         % probalitity that a negative measurement relates to a occupied voxel
         map_prob_miss(1,1) double ...
           {mustBeNonnegative, mustBeLessThan(map_prob_miss,1)} = 0.4;
@@ -113,12 +113,12 @@ classdef OctoMap < handle
         rosservice_getconfig           = [];
         rosservice_setconfig_degrading = [];
         rosservice_setconfig_insertion = [];
-        
+
         rosservice_clear = [];
         rosservice_reset = [];
-        
+
         rosservice_addcloud = [];
-        rosservice_getcloud = [];        
+        rosservice_getcloud = [];
     end
 
 
@@ -139,7 +139,7 @@ classdef OctoMap < handle
 
             % init result and internal variables
             result = false;
-            
+
             % get client and call service
             serviceclient = obj.getServiceGetConfig();
             if (isempty(serviceclient)); return; end
@@ -153,57 +153,57 @@ classdef OctoMap < handle
             obj.auto_degrading = response.Config.Degrading.AutoDegrading;
             obj.auto_degrading_intervall = ...
               response.Config.Degrading.AutoDegradingIntervall;
-          
+
             obj.map_clamp_max  = response.Config.Insertion.MapClampMax;
             obj.map_clamp_min  = response.Config.Insertion.MapClampMin;
             obj.map_prob_hit   = response.Config.Insertion.MapProbHit;
             obj.map_prob_miss  = response.Config.Insertion.MapProbMiss;
             obj.map_prob_threshold = ...
               response.Config.Insertion.MapProbThreshold;
-            
+
             obj.map_resolution = response.Config.Base.MapResolution;
             obj.output_frame   = response.Config.Base.OutputFrame;
-            
+
             % return ok
             result = true;
         end
-        
+
         % set config
         function result = setConfigDegrading(obj)
 
             % init result and internal variables
             result = false;
-            
+
             % get client
             serviceclient = obj.getServiceSetConfigDegrading();
             if (isempty(serviceclient)); return; end
-            
+
             % create request message
             request = rosmessage(serviceclient);
             request.Config.AutoDegrading = obj.auto_degrading;
             request.Config.AutoDegradingIntervall = ...
               obj.auto_degrading_intervall;
-          
+
             % call service
             response = call(serviceclient, request);
 
             % check result
             if (isempty(response)); return; end
-           
+
             % return ok
             result = response.Ok;
         end
-        
+
         % set config
         function result = setConfigInsertion(obj)
 
             % init result and internal variables
             result = false;
-            
+
             % get client
             serviceclient = obj.getServiceSetConfigInsertion();
             if (isempty(serviceclient)); return; end
-            
+
             % create request message
             request = rosmessage(serviceclient);
             request.Config.MapClampMax = obj.map_clamp_max;
@@ -211,23 +211,23 @@ classdef OctoMap < handle
             request.Config.MapProbHit  = obj.map_prob_hit;
             request.Config.MapProbMiss = obj.map_prob_miss;
             request.Config.MapProbThreshold = obj.map_prob_threshold;
-          
+
             % call service
             response = call(serviceclient, request);
 
             % check result
             if (isempty(response)); return; end
-           
+
             % return ok
             result = response.Ok;
         end
-        
+
         % clear & reset
         function result = clear(obj)
 
             % init result and internal variables
             result = false;
-            
+
             % get client and call service
             serviceclient = obj.getServiceClear();
             if (isempty(serviceclient)); return; end
@@ -236,10 +236,10 @@ classdef OctoMap < handle
 
             % check result
             if (isempty(response)); return; end
-           
+
             % return ok
             result = true;
-        end        
+        end
         function result = reset(obj, resolution, output_frame)
 
             % init result and internal variables
@@ -250,25 +250,25 @@ classdef OctoMap < handle
             if (nargin < 3)
                 output_frame = obj.output_frame;
             end
-            
+
             % get client
             serviceclient = obj.getServiceReset();
             if (isempty(serviceclient)); return; end
-            
+
             % create request message
             request = rosmessage(serviceclient);
             request.Config.MapResolution = resolution;
             request.Config.OutputFrame   = output_frame;
-          
+
             % call service
             response = call(serviceclient, request);
 
             % check result
             if (isempty(response)); return; end
-           
+
             % return ok
             result = response.Ok;
-        end        
+        end
     end
 
     % xyz = readXYZ(pcloud)
@@ -281,7 +281,7 @@ classdef OctoMap < handle
             if (nargin < 3)
                 transform = eye(4);
             end
-            
+
             % convert data if necessary
             if (isnumeric(data))
                 data = OctoMap.mat2PointCloud2(data);
@@ -289,28 +289,28 @@ classdef OctoMap < handle
             end
             if (isnumeric(transform) && (size(transform, 1) == 4) && ...
               (size(transform, 2) == 4))
-                transform = obj.tform2rostf(transform);                
+                transform = obj.tform2rostf(transform);
             end
-            
+
             % get client
             serviceclient = obj.getServiceAddCloud();
             if (isempty(serviceclient)); return; end
-            
+
             % create request message
             request = rosmessage(serviceclient);
             request.Cloud     = data;
             request.Transform = transform;
-          
+
             % call service
             response = call(serviceclient, request);
 
             % check result
             if (isempty(response)); return; end
-           
+
             % return ok
             result = response.Ok;
         end
-        
+
         function result = getCloud(obj, occupied)
 
             % init result and internal variables
@@ -318,7 +318,7 @@ classdef OctoMap < handle
             if (nargin < 2)
                 occupied = true;
             end
-            
+
             % get client and call service
             serviceclient = obj.getServiceGetCloud();
             if (isempty(serviceclient)); return; end
@@ -328,24 +328,28 @@ classdef OctoMap < handle
 
             % check result
             if (isempty(response)); return; end
-            
+
             % return result
             result = response.Cloud;
         end
-        
-        function result = getCloudAsMatrix(obj)
 
-            result = readXYZ(obj.getCloud);
+        function result = getCloudAsMatrix(obj, occupied)
+
+            if (nargin < 2)
+                result = readXYZ(obj.getCloud());
+            else
+                result = readXYZ(obj.getCloud(occupied));
+            end
         end
-        
+
     end
- 
-    
+
+
     %% ros-interface
     % internal (creating static variable
     methods (Static, Access=private)
         function out = setRosNode(data)
-            
+
             persistent rosnode;
             if (nargin > 0)
                 rosnode = data;
@@ -354,11 +358,11 @@ classdef OctoMap < handle
         end
 
     end
-    
+
     % half internal (hidden)
     methods (Static, Hidden)
         function out = getRosNode()
-            
+
             out = OctoMap.setRosNode();
             if (isempty(out))
                 node_name = 'octomap_for_matlab';
@@ -366,65 +370,65 @@ classdef OctoMap < handle
                 out = OctoMap.setRosNode(robotics.ros.Node(node_name));
             end
         end
-        
+
         function resetRosNode()
 
             OctoMap.setRosNode([]);
         end
-        
+
         function startGlobalRosNodeIfNecessary()
 
             if (~robotics.ros.internal.Global.isNodeActive)
                 rosinit();
             end
         end
-        
+
         function nodename = getOctomapNodeName(selectFirst)
-            
+
             % init result
             nodename = '';
-            
+
             % get list of all rosnodes
             OctoMap.startGlobalRosNodeIfNecessary();
             list = rosnode('list');
-            
+
             % check for octomap node
             mask = ~contains(list, 'matlab') & ...
                 contains(list, 'octomap') & contains(list, 'pa');
             list = list(mask);
-            
+
             % check if list is empty
             if (isempty(list)); return; end
-            
+
             % check for multiple results
             if (~isscalar(list))
                 if ((nargin < 1) || ~selectFirst)
                     return;
                 end
             end
-            
+
             % return first entry
             nodename = char(list(1));
         end
-        
+
         function client = createRosServiceClient(service_name, timeout)
-            
+
             % init result
             client = '';
-            
+
             % check for octomap node
             nodename_octomap = OctoMap.getOctomapNodeName();
             if (isempty(nodename_octomap))
                 warning('Can''t locate octomap node. Is it launch ?');
                 return
             end
-            
+
             % get own node name
             nodename_self = OctoMap.getRosNode();
-            
+
             % get full service name
             service_fullname=[nodename_octomap, '/', service_name];
-            
+
             % print what this function does
             fprintf(['Creating ROS-service client for octomap ', ...
               'service "', service_name, '"\n']);
@@ -439,7 +443,7 @@ classdef OctoMap < handle
                 service_fullname, 'Timeout', timeout);
             end
         end
-        
+
         function pointcloud2 = mat2PointCloud2(mat)
             % function based on matlab answer
             %    https://de.mathworks.com/matlabcentral/answers/395620
@@ -454,14 +458,14 @@ classdef OctoMap < handle
             % Assign metadata
             pointcloud2.Height    = uint32(1);
             pointcloud2.Width     = uint32(numPts);
-            pointcloud2.PointStep = uint32(12); 
+            pointcloud2.PointStep = uint32(12);
             pointcloud2.RowStep   = uint32(12);
 
             % Assign point field data
             fieldNames = {'x','y','z'};
             pointcloud2.Data = zeros( ...
               numPts * pointcloud2.RowStep,1,'uint8');
-          
+
             for idx = 1:3
                 pointcloud2.Fields(idx) = ...
                   rosmessage('sensor_msgs/PointField');
@@ -472,155 +476,155 @@ classdef OctoMap < handle
                 pointcloud2.Fields(idx).Datatype = uint8(7);
                 pointcloud2.Fields(idx).Count    = uint32(1);
             end
-            
+
             % convert data to float
             mat = single(mat);
 
             % Assign raw point cloud data in uint8 format
             for idx = 1:numPts
                startIdx = (idx-1) * pointcloud2.RowStep + 1;
-               pointcloud2.Data(startIdx:startIdx+11) = ... 
+               pointcloud2.Data(startIdx:startIdx+11) = ...
                    typecast(mat(idx,:),'uint8');
             end
         end
-        
+
         function tf = tform2rostf(mat)
-            
+
             % init result
             tf = rosmessage('geometry_msgs/Transform');
-            
+
             % set rotation
             quat = tform2quat(mat);
-            tf.Rotation.W = quat(1); 
-            tf.Rotation.X = quat(2); 
-            tf.Rotation.Y = quat(3); 
-            tf.Rotation.Z = quat(4); 
-            
+            tf.Rotation.W = quat(1);
+            tf.Rotation.X = quat(2);
+            tf.Rotation.Y = quat(3);
+            tf.Rotation.Z = quat(4);
+
             % set translation
             vec = tform2trvec(mat);
             tf.Translation.X = vec(1);
             tf.Translation.X = vec(2);
             tf.Translation.X = vec(3);
         end
-        
+
     end
-    
+
     % internal
     methods (Access=private)
         function serviceclient = getServiceGetConfig(obj)
-            
+
             % init result
             serviceclient = ''; %#ok<NASGU>
-            
+
             if (isempty(obj.rosservice_getconfig))
                 obj.rosservice_getconfig = ...
                   obj.createRosServiceClient('getconfig');
             end
-            
+
             % return result
             serviceclient = obj.rosservice_getconfig;
         end
-        
+
         function serviceclient = getServiceSetConfigDegrading(obj)
-            
+
             % init result
             serviceclient = ''; %#ok<NASGU>
-            
+
             if (isempty(obj.rosservice_setconfig_degrading))
                 obj.rosservice_setconfig_degrading = ...
                   obj.createRosServiceClient('setconfig_degrading');
             end
-            
+
             % return result
             serviceclient = obj.rosservice_setconfig_degrading;
         end
-        
+
         function serviceclient = getServiceSetConfigInsertion(obj)
-            
+
             % init result
             serviceclient = ''; %#ok<NASGU>
-            
+
             if (isempty(obj.rosservice_setconfig_insertion))
                 obj.rosservice_setconfig_insertion = ...
                   obj.createRosServiceClient('setconfig_insertion');
             end
-            
+
             % return result
             serviceclient = obj.rosservice_setconfig_insertion;
         end
-        
+
         function serviceclient = getServiceClear(obj)
-            
+
             % init result
             serviceclient = ''; %#ok<NASGU>
-            
+
             if (isempty(obj.rosservice_clear))
                 obj.rosservice_clear = ...
                   obj.createRosServiceClient('clear');
             end
-            
+
             % return result
             serviceclient = obj.rosservice_clear;
         end
-        
+
         function serviceclient = getServiceReset(obj)
-            
+
             % init result
             serviceclient = ''; %#ok<NASGU>
-            
+
             if (isempty(obj.rosservice_reset))
                 obj.rosservice_reset = ...
                   obj.createRosServiceClient('reset');
             end
-            
+
             % return result
             serviceclient = obj.rosservice_reset;
         end
-        
+
         function serviceclient = getServiceAddCloud(obj)
-            
+
             % init result
             serviceclient = ''; %#ok<NASGU>
-            
+
             if (isempty(obj.rosservice_addcloud))
                 obj.rosservice_addcloud = ...
                   obj.createRosServiceClient('addcloudtf');
             end
-            
+
             % return result
             serviceclient = obj.rosservice_addcloud;
-        end        
-        
+        end
+
         function serviceclient = getServiceGetCloud(obj)
-            
+
             % init result
             serviceclient = ''; %#ok<NASGU>
-            
+
             if (isempty(obj.rosservice_getcloud))
                 obj.rosservice_getcloud = ...
                   obj.createRosServiceClient('getcloud');
             end
-            
+
             % return result
             serviceclient = obj.rosservice_getcloud;
-        end        
+        end
     end
-    
+
     % external (user interface)
     methods
         function resetRosInterfaces(obj)
-            
+
             % reset node
             obj.resetRosNode();
-            
+
             % reset services
             obj.rosservice_getconfig           = [];
             obj.rosservice_setconfig_degrading = [];
             obj.rosservice_setconfig_insertion = [];
-            
+
             obj.rosservice_clear = [];
             obj.rosservice_reset = [];
-            
+
             obj.rosservice_addcloud = [];
             obj.rosservice_getcloud = [];
         end
