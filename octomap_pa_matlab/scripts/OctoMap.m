@@ -503,8 +503,8 @@ classdef OctoMap < handle
             % set translation
             vec = tform2trvec(mat);
             tf.Translation.X = vec(1);
-            tf.Translation.X = vec(2);
-            tf.Translation.X = vec(3);
+            tf.Translation.Y = vec(2);
+            tf.Translation.Z = vec(3);
         end
 
     end
