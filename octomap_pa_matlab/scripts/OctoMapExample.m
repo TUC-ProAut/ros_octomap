@@ -109,5 +109,4 @@ for i = 1:100
     % wait and display
     drawnow;
     pause(1);
-    fprintf("%d\n", i);
 end
