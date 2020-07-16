@@ -58,9 +58,14 @@
 
 fprintf('executing startup script for ros octomap\n');
 
-local_matlab_path = [fileparts(fileparts(mfilename('fullpath'))), '/'];
-messages_gen_path = [local_matlab_path, 'msgs/'];
+% setup path variables
+local_matlab_path = fileparts(mfilename('fullpath'));
+package_base_path = [fileparts(local_matlab_path), '/'];
+messages_gen_path = [package_base_path, 'msgs/'];
 messages_load_path = [messages_gen_path, 'matlab_gen/msggen/'];
+
+% add local directory
+addpath(local_matlab_path);
 
 % check if messages are build
 if (exist(messages_load_path, 'dir'))
@@ -73,7 +78,8 @@ else
 
     return
 end
-clear local_matlab_path  messages_gen_path messages_load_path;
+clear local_matlab_path package_base_path ...
+  messages_gen_path messages_load_path;
 
 % check if messages are loaded (including java-class)
 temp = rosmsg_check();
