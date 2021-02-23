@@ -2,6 +2,13 @@
 Changelog for package octomap_pa
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* added missing package for message generation
+  (geometry_msgs)
+* added package for messages (octomap_pa_msgs)
+* Contributors: Peter Weissig
+
 1.3.3 (2018-03-01)
 ------------------
 * Increased package version to avoid error on ros build farm
