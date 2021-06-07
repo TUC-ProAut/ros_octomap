@@ -414,6 +414,9 @@ template <typename OCTREE>
 
     // delete temp tree
     delete tree_temp;
+
+    // return success
+    return true;
 }
 
 //**************************[addCloud]*****************************************
